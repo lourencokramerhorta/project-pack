@@ -9,6 +9,7 @@ router.get("/login", (req, res) => res.render("auth/login"));
 
 router.post("/login", (req, res, next) => {
   const { username, password } = req.body;
+  console.log(req.body);
   if (username === "" || password === "") {
     res.render("auth/login", {
       errorMessage: "enter both user and password",
@@ -21,9 +22,10 @@ router.post("/login", (req, res, next) => {
       if (!user) {
         res.render("auth/login", { errorMessage: "User is not registerd." });
         return;
-      } else if (bcryptjs.compareSync(password, user.passwordHash)) {
+      } else if (bcryptjs.compareSync(password, user.password)) {
         req.session.currentUser = user;
         console.log(user);
+        console.log(req.session);
         res.redirect("/");
       } else {
         res.render("auth/login", { errorMessage: "Wrong password." });
@@ -48,7 +50,7 @@ router.post("/signup", (req, res, next) => {
     .then((salt) => bcryptjs.hash(password, salt))
     .then((passwordHash) => {
       console.log(passwordHash);
-      return User.create({ username, passwordHash });
+      return User.create({ username, password: passwordHash });
     })
     .then((user) => {
       console.log(user);
