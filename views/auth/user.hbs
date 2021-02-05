@@ -1,0 +1,26 @@
+{{#if user}}
+<form action="/create-dog" method="GET">
+  <button>Create New Dog</button>
+</form>
+<form action="/logout" method="POST">
+  <button>Log Out</button>
+</form>
+<h2>Hello, {{ user.username }}!</h2>
+<p>This is your profile page my friend!</p>
+<img src="{{user.photo}}" alt="human"><br>
+<button>
+  <a href="/user-profile">Reload the page</a>
+</button>
+{{#each user.dogs}}
+<div>
+  <h3>{{dogName}}</h3>
+  <a href="/dogs/{{id}}">view dog</a>
+  <form action="/dogs/{{id}}/delete" method="POST">
+    <button>Delete</button>
+  </form>
+
+  {{/each}}
+
+  {{else}}
+  <p>No logged in, sorry!</p>
+  {{/if}}
