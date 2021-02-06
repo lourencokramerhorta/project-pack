@@ -5,6 +5,15 @@ const router = express.Router();
 const Park = require("../models/Park.model");
 
 
+//GET parks/:id
+router.get("/parks/:id", (req, res, next) => {
+  Park.findById(req.params.id)
+    .then(park => {
+      console.log(park);
+      res.render("park/park", {park});
+    })
+    .catch(err => console.log(err))
+});
 
 //POST parks/create-park
 router.post("/parks/create-park", (req, res, next) => {
