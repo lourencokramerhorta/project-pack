@@ -1,16 +1,15 @@
 //Require express and create router
 const express = require("express");
 const router = express.Router();
-
 //Require bcrypt and define salt rounds
 const bcryptjs = require("bcryptjs");
 const saltRounds = 10;
-
 //Require User Model
 const User = require("../models/User.model");
-
 //Require RouteGuard
 const RouteGuard = require("../middleware/routeGuard");
+
+
 
 //GET login
 router.get("/login", (req, res) => res.render("auth/login"));

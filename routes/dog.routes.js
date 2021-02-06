@@ -1,10 +1,11 @@
 //Require express and create router
 const express = require("express");
 const router = express.Router();
-
 //Require User and Dog Models
 const Dog = require("../models/Dog.model");
 const User = require("../models/User.model");
+
+
 
 //GET create-dog
 router.get("/create-dog", (req, res, next) => {

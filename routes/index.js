@@ -1,7 +1,8 @@
+//Require express and create router
 const express = require('express');
 const router = express.Router();
 
-/* GET home page */
+//GET home page
 router.get('/', (req, res, next) => {
   res.render('index');
 });
