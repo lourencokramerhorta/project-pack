@@ -4,7 +4,7 @@ const bcryptjs = require("bcryptjs");
 const saltRounds = 10;
 const User = require("../models/User.model");
 const Dog = require("../models/Dog.model");
-const RoutGuard = require("../midleware/routeGuard");
+const RoutGuard = require("../middleware/routeGuard");
 
 router.get("/login", (req, res) => res.render("auth/login"));
 
