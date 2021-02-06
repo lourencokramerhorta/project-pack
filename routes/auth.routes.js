@@ -67,8 +67,12 @@ router.get("/create-dog", (req, res, next) => {
 router.post("/create-dog", (req, res, next) => {
   const { name, breed, photo, age } = req.body;
   console.log(req.body);
-  Dog.create({ name, breed, photo, age });
-  res.redirect("/user-profile");
+  Dog.create({ name, breed, photo, age })
+    .then((createdDog) => {
+      return User.findByIdAndUpdate(req.session.currentUser, { $push: { dogs: createdDog._id } });
+    })
+    .then(res.redirect("/user-profile"))
+    .catch(err => console.log(err));
 });
 
 router.get("/user-profile", (req, res, next) => {
