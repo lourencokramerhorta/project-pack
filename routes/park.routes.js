@@ -5,8 +5,8 @@ const router = express.Router();
 const Park = require("../models/Park.model");
 
 
-//GET parks/:id
-router.get("/parks/:id", (req, res, next) => {
+//GET parks/park/:id
+router.get("/parks/park/:id", (req, res, next) => {
   Park.findById(req.params.id)
     .then(park => {
       console.log(park);
