@@ -1,0 +1,22 @@
+<h2>Hello, {{ dog.name }}!</h2>
+<p>I`m a {{dog.age}} years old {{dog.breed}}</p>
+<img src="{{dog.photo}}" alt="dog"><br>
+<button>
+  <a href="/dog/:id">Reload the page</a>
+</button>
+
+<hr>
+
+{{!-- Human SECTION --}}
+<form action="/user-profile" method="GET">
+  <button>My Human</button>
+</form>
+
+{{#each dog.friends}}
+<div>
+  <h3>{{name}}</h3>
+  <a href="/dog/{{id}}">view dog</a>
+  <form action="/dog/{{id}}/delete" method="POST">
+    <button>Delete</button>
+  </form>
+  {{/each}}

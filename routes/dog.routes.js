@@ -7,8 +7,17 @@ const User = require("../models/User.model");
 
 //GET dog/:id
 router.get("/dog/:id", (req, res, next) => {
-  res.render("dog/dog");
+  Dog.findById(req.params.id)
+    .then((dog) => {
+      console.log(dog);
+      res.render("dog/dog", { dog: dog });
+    })
+    .catch((err) => {
+      console.log("error wen creating dog page");
+    });
 });
+
+//POST dog/:id
 
 //GET create-dog
 router.get("/create-dog", (req, res, next) => {
@@ -17,9 +26,17 @@ router.get("/create-dog", (req, res, next) => {
 
 //POST create-dog
 router.post("/create-dog", (req, res, next) => {
-  const { name, breed, photo, age } = req.body;
+  const { name, breed, photo, age, sex, size } = req.body;
   console.log(req.body);
-  Dog.create({ name, breed, photo, age })
+  Dog.create({
+    name,
+    breed,
+    photo,
+    age,
+    human: req.session.currentUser._id,
+    sex,
+    size,
+  })
     .then((createdDog) => {
       return User.findByIdAndUpdate(req.session.currentUser, {
         $push: { dogs: createdDog._id },
