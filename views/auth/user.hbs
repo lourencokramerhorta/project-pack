@@ -17,8 +17,8 @@
 {{#each user.dogs}}
 <div>
   <h3>{{name}}</h3>
-  <a href="/dogs/{{id}}">view dog</a>
-  <form action="/dogs/{{id}}/delete" method="POST">
+  <a href="/dog/{{id}}">view dog</a>
+  <form action="/dog/{{id}}/delete" method="POST">
     <button>Delete</button>
   </form>
 {{/each}}

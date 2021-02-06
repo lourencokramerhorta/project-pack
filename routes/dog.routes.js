@@ -5,7 +5,10 @@ const router = express.Router();
 const Dog = require("../models/Dog.model");
 const User = require("../models/User.model");
 
-
+//GET dog/:id
+router.get("/dog/:id", (req, res, next) => {
+  res.render("dog/dog");
+});
 
 //GET create-dog
 router.get("/create-dog", (req, res, next) => {
