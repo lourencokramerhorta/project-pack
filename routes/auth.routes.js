@@ -45,7 +45,7 @@ router.post("/login", (req, res, next) => {
 //POST logout
 router.post("/logout", (req, res) => {
   req.session.destroy();
-  res.redirect("/login");
+  res.redirect("/");
 });
 
 
@@ -74,7 +74,12 @@ router.post("/signup", (req, res, next) => {
 //GET user profile
 router.get("/user-profile", (req, res, next) => {
   console.log(req.session);
-  res.render("auth/user", { user: req.session.currentUser });
+  User.findById(req.session.currentUser._id)
+    .populate("dogs")
+    .then((dbUser) =>
+      res.render("auth/user", { user: dbUser })
+    )
+    .catch(err => console.log(err));
 });
 
 module.exports = router;

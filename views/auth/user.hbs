@@ -1,23 +1,29 @@
+{{!-- If user is logged in --}}
 {{#if user}}
-<form action="/create-dog" method="GET">
-  <button>Create New Dog</button>
-</form>
 <h2>Hello, {{ user.username }}!</h2>
 <p>This is your profile page my friend!</p>
 <img src="{{user.photo}}" alt="human"><br>
 <button>
   <a href="/user-profile">Reload the page</a>
 </button>
+
+<hr>
+
+{{!-- DOG SECTION --}}
+<form action="/create-dog" method="GET">
+  <button>Create New Dog</button>
+</form>
+
 {{#each user.dogs}}
 <div>
-  <h3>{{dogName}}</h3>
+  <h3>{{name}}</h3>
   <a href="/dogs/{{id}}">view dog</a>
   <form action="/dogs/{{id}}/delete" method="POST">
     <button>Delete</button>
   </form>
+{{/each}}
 
-  {{/each}}
-
-  {{else}}
+{{!-- If not logged in --}}
+{{else}}
   <p>No logged in, sorry!</p>
-  {{/if}}
+{{/if}}

@@ -9,7 +9,7 @@ const User = require("../models/User.model");
 
 //GET create-dog
 router.get("/create-dog", (req, res, next) => {
-  res.render("auth/createDog");
+  res.render("dog/createDog");
 });
 
 //POST create-dog
