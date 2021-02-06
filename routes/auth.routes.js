@@ -1,13 +1,21 @@
+//Require express and create router
 const express = require("express");
 const router = express.Router();
+
+//Require bcrypt and define salt rounds
 const bcryptjs = require("bcryptjs");
 const saltRounds = 10;
-const User = require("../models/User.model");
-const Dog = require("../models/Dog.model");
-const RoutGuard = require("../middleware/routeGuard");
 
+//Require User Model
+const User = require("../models/User.model");
+
+//Require RouteGuard
+const RouteGuard = require("../middleware/routeGuard");
+
+//GET login
 router.get("/login", (req, res) => res.render("auth/login"));
 
+//POST login
 router.post("/login", (req, res, next) => {
   const { username, password } = req.body;
   console.log(req.body);
@@ -35,13 +43,17 @@ router.post("/login", (req, res, next) => {
     .catch((err) => next(err));
 });
 
+//POST logout
 router.post("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/login");
 });
 
+
+//GET sign up
 router.get("/signup", (req, res) => res.render("auth/signup"));
 
+//POST sign up
 router.post("/signup", (req, res, next) => {
   console.log("The form data: ", req.body);
   const { username, password, email } = req.body;
@@ -60,23 +72,10 @@ router.post("/signup", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get("/create-dog", (req, res, next) => {
-  res.render("auth/createDog");
-});
-
-router.post("/create-dog", (req, res, next) => {
-  const { name, breed, photo, age } = req.body;
-  console.log(req.body);
-  Dog.create({ name, breed, photo, age })
-    .then((createdDog) => {
-      return User.findByIdAndUpdate(req.session.currentUser, { $push: { dogs: createdDog._id } });
-    })
-    .then(res.redirect("/user-profile"))
-    .catch(err => console.log(err));
-});
-
+//GET user profile
 router.get("/user-profile", (req, res, next) => {
   console.log(req.session);
   res.render("auth/user", { user: req.session.currentUser });
 });
+
 module.exports = router;

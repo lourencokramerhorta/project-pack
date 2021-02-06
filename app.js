@@ -45,9 +45,11 @@ app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 app.locals.title = "Express - Generated with IronGenerator";
 
 //Get routes
+const dogRouter = require('./routes/dog.routes');
 const authRouter = require("./routes/auth.routes");
 const index = require("./routes/index");
 app.use("/", index);
 app.use("/", authRouter);
+app.use('/', dogRouter);
 
 module.exports = app;
