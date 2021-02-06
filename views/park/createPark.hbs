@@ -1,0 +1,53 @@
+<div>
+  <h2>Create park</h2>
+  <form action="/parks/create-park" method="POST">
+    <label for="input-name">Name:</label>
+    <input type="text" id="input-name" name="name"/><br>
+
+    <label for="input-location">Location:</label>
+    <input type="text" id="input-location" name="location"/><br>
+
+    <label for="input-photo">Photo:</label>
+    <input type="text" id="input-photo" name="photo"/><br>
+
+    <label for="input-water">Water?</label>
+    <input type="checkbox" id="input-water" name="water" value="true"/><br>
+
+    <label for="input-playObj">Play?</label>
+    <input type="checkbox" id="input-playObj" name="playObj" value="true"/><br>
+
+    <label for="input-sterilized">Sterilized?</label>
+    <input type="checkbox" id="input-sterilized" name="sterilized" value="true"/><br>
+
+    <label for="input-poopBags">Poop Bags?</label>
+    <input type="checkbox" id="input-poopBags" name="poopBags" value="true"/><br>
+
+    <label for="input-cafe">Cafe?</label>
+    <input type="checkbox" id="input-cafe" name="cafe" value="true"/><br>
+
+    <label for="input-crowded">Crowded?</label>
+    <select name="crowded" id="input-crowded">
+      <option value="Never">Never</option>
+      <option value="Sometimes">Sometimes</option>
+      <option value="Always">Always</option>
+    </select><br>
+    
+    <label for="input-ground">Ground type:</label>
+    <select name="ground" id="size">
+      <option value="Muddy">Muddy</option>
+      <option value="Sand">Sand</option>
+      <option value="Grass">Grass</option>
+      <option value="Stones">Stones</option>
+    </select><br>
+
+    <label for="input-size">Park size:</label>
+    <select name="size" id="size">
+      <option value="Small">Small</option>
+      <option value="Medium">Medium</option>
+      <option value="Large">Large</option>
+    </select><br>
+
+    <button type="submit">Create park</button>
+
+  </form>
+</div>
