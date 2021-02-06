@@ -11,7 +11,6 @@ router.get("/dog/:id", (req, res, next) => {
   Dog.findById(req.params.id)
     .populate("human")
     .then((dog) => {
-      console.log(dog);
       res.render("dog/dog", { dog });
     })
     .catch((err) => {

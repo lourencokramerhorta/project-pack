@@ -1,0 +1,12 @@
+<h2>Edit profile</h2>
+<form action="/user/{{user.id}}/edit" method="post" enctype="multipart/form-data">
+  <label for=" username">Username:</label><br>
+  <input type="text" id="username" name="username" value="{{user.username}}"><br>
+  <div class="form-group">
+    <label for="photo-input">Photo:</label>
+    <input type="file" name="photo" id="photo-input" class="form-control-file" />
+    <input type="text" name="currentPhoto" hidden id="" value="{{user.photo}}">
+  </div>
+
+  <button>submit</button>
+</form>

@@ -6,6 +6,7 @@
 <button>
   <a href="/user-profile">Reload the page</a>
 </button>
+<a href="/user/{{user.id}}/edit">Edit</a>
 
 <hr>
 
@@ -21,9 +22,9 @@
   <form action="/dog/{{id}}/delete" method="POST">
     <button>Delete</button>
   </form>
-{{/each}}
+  {{/each}}
 
-{{!-- If not logged in --}}
-{{else}}
-  <p>No logged in, sorry!</p>
-{{/if}}
+  {{!-- If not logged in --}}
+  {{else}}
+  <p>Not logged in, sorry!</p>
+  {{/if}}
