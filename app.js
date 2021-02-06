@@ -11,7 +11,7 @@ const path = require("path");
 //Do require of dotenv and configs
 require("dotenv").config();
 require("./configs/session.config")(app);
-require('./configs/db.config');
+require("./configs/db.config");
 
 //ETC
 const app_name = require("./package.json").name;
@@ -45,13 +45,13 @@ app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 app.locals.title = "Express - Generated with IronGenerator";
 
 //Get routes
-const parkRouter = require('./routes/park.routes')
-const dogRouter = require('./routes/dog.routes');
+const parkRouter = require("./routes/park.routes");
+const dogRouter = require("./routes/dog.routes");
 const authRouter = require("./routes/auth.routes");
 const index = require("./routes/index");
 app.use("/", index);
 app.use("/", authRouter);
-app.use('/', dogRouter);
-app.use('/', parkRouter);
+app.use("/", dogRouter);
+app.use("/", parkRouter);
 
 module.exports = app;
