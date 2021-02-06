@@ -56,4 +56,14 @@ router.post("/user/:id/edit", fileUploader.single("photo"), (req, res) => {
     );
 });
 
+router.get("/usersList", (req, res, next) => {
+  User.find()
+    .then((users) => {
+      res.render("auth/userList", { users });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 module.exports = router;

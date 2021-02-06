@@ -57,4 +57,14 @@ router.post("/dog/:id/delete", (req, res, next) => {
     });
 });
 
+router.get("/dogsList", (req, res, next) => {
+  Dog.find()
+    .then((dogs) => {
+      res.render("dog/dogList", { dogs });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 module.exports = router;
