@@ -1,8 +1,10 @@
-//Require express and create router
+//Require express, cloudinary and create router
 const express = require("express");
 const router = express.Router();
+const fileUploader = require("../configs/cloudinary.config");
 //Require Park Model
 const Park = require("../models/Park.model");
+
 
 
 //GET parks/park/:id
@@ -16,28 +18,43 @@ router.get("/parks/park/:id", (req, res, next) => {
 });
 
 //POST parks/create-park
-router.post("/parks/create-park", (req, res, next) => {
-  const { name, location, photo, water, playObj, sterilized, poopBags, cafe, crowded, ground, size } = req.body;
-  console.log(req.body);
-  Park.create({
-    name,
-    location,
-    photo,
-    water,
-    playObj,
-    sterilized,
-    poopBags,
-    cafe, 
-    crowded,
-    ground, 
-    size
-  })
-    .then((createdPark) => {
-      console.log(createdPark);
-      res.redirect('/home')
+router.post(
+  "/parks/create-park",
+  fileUploader.single("photo"),
+   (req, res, next) => {
+    const {
+      name,
+      location,
+      water,
+      playObj,
+      sterilized,
+      poopBags,
+      cafe,
+      crowded,
+      ground,
+      size,
+    } = req.body;
+    console.log(req.body);
+    Park.create({
+      name,
+      location,
+      photo: req.file.path,
+      water,
+      playObj,
+      sterilized,
+      poopBags,
+      cafe,
+      crowded,
+      ground,
+      size,
     })
-    .catch((err) => console.log(err));
-  });
+      .then((createdPark) => {
+        console.log(createdPark);
+        res.redirect("/home");
+      })
+      .catch((err) => console.log(err));
+  }
+);
 
 //GET parks/create-park
 router.get("/parks/create-park", (req, res, next) => {

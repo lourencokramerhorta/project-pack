@@ -1,6 +1,6 @@
 <div>
   <h2>Create park</h2>
-  <form action="/parks/create-park" method="POST">
+  <form action="/parks/create-park" method="POST" enctype="multipart/form-data">
     <label for="input-name">Name:</label>
     <input type="text" id="input-name" name="name"/><br>
 
@@ -8,7 +8,7 @@
     <input type="text" id="input-location" name="location"/><br>
 
     <label for="input-photo">Photo:</label>
-    <input type="text" id="input-photo" name="photo"/><br>
+    <input type="file" id="input-photo" name="photo"/><br>
 
     <label for="input-water">Water?</label>
     <input type="checkbox" id="input-water" name="water" value="true"/><br>
