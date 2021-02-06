@@ -19,7 +19,7 @@ const userSchema = new Schema(
     },
     photo: {
       type: String,
-      default:
+      default: //pedir filipe config fotos default
         "https://media2.s-nbcnews.com/j/newscms/2016_22/1562491/ap_16154563031509_937210859065e41391a67eed87ecef07.fit-2000w.jpg",
     },
     /* location:, GPS COORDINATES */

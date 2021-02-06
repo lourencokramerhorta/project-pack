@@ -4,13 +4,15 @@ const router = express.Router();
 //Require User and Dog Models
 const Dog = require("../models/Dog.model");
 const User = require("../models/User.model");
+const fileUploader = require("../configs/cloudinary.config");
 
 //GET dog/:id
 router.get("/dog/:id", (req, res, next) => {
   Dog.findById(req.params.id)
+    .populate("human")
     .then((dog) => {
       console.log(dog);
-      res.render("dog/dog", { dog: dog });
+      res.render("dog/dog", { dog });
     })
     .catch((err) => {
       console.log("error wen creating dog page");
@@ -25,17 +27,17 @@ router.get("/create-dog", (req, res, next) => {
 });
 
 //POST create-dog
-router.post("/create-dog", (req, res, next) => {
-  const { name, breed, photo, age, sex, size } = req.body;
+router.post("/create-dog", fileUploader.single("photo"), (req, res, next) => {
+  const { name, breed, age, sex, size } = req.body;
   console.log(req.body);
   Dog.create({
     name,
     breed,
-    photo,
     age,
     human: req.session.currentUser._id,
     sex,
     size,
+    photo: req.file.path,
   })
     .then((createdDog) => {
       return User.findByIdAndUpdate(req.session.currentUser, {
@@ -44,6 +46,16 @@ router.post("/create-dog", (req, res, next) => {
     })
     .then(res.redirect("/user-profile"))
     .catch((err) => console.log(err));
+});
+
+router.post("/dog/:id/delete", (req, res, next) => {
+  Dog.findByIdAndRemove(req.params.id)
+    .then(() => {
+      res.redirect("/user-profile");
+    })
+    .then((err) => {
+      return err;
+    });
 });
 
 module.exports = router;
