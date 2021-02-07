@@ -1,11 +1,21 @@
-<br>
-<h3>Parks</h3>
-<br>
+{{!-- MAP --}}
+<div>
+  <h2>MAP WILL BE HERE!</h2>
+</div>
+<hr>
+{{!-- W/ SESSION --}}
+{{#if userInSession}}
+{{!-- TABS --}}
+{{> tabs}}
+<hr>
 <a href="/parks/create-park">Create park</a>
 <hr>
+{{!-- PARK LIST --}}
+<h3>List Parks</h3>
 {{#each parks}}
 <div>
   <h3>{{name}}</h3>
   <a href="/parks/park/{{id}}">View</a>
 </div>
-  {{/each}}
+{{/each}}
+{{/if}}

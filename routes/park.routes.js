@@ -11,8 +11,7 @@ const Park = require("../models/Park.model");
 router.get("/parks/park/:id", (req, res, next) => {
   Park.findById(req.params.id)
     .then(park => {
-      console.log(park);
-      res.render("park/park", {park});
+      res.render("park/park", { park, userInSession: req.session.currentUser });
     })
     .catch(err => console.log(err))
 });
@@ -27,21 +26,18 @@ router.post(
       location,
       water,
       playObj,
-      sterilized,
       poopBags,
       cafe,
       crowded,
       ground,
       size,
     } = req.body;
-    console.log(req.body);
     Park.create({
       name,
       location,
       photo: req.file.path,
       water,
       playObj,
-      sterilized,
       poopBags,
       cafe,
       crowded,
@@ -49,7 +45,6 @@ router.post(
       size,
     })
       .then((createdPark) => {
-        console.log(createdPark);
         res.redirect("/home");
       })
       .catch((err) => console.log(err));
@@ -58,7 +53,7 @@ router.post(
 
 //GET parks/create-park
 router.get("/parks/create-park", (req, res, next) => {
-  res.render("park/createPark");
+  res.render("park/createPark", { userInSession: req.session.currentUser });
 });
 
 //GET home
@@ -67,7 +62,7 @@ router.get("/home", (req, res, next) => {
     .then(parks => {
        res.render("park/home", {
          parks,
-         userInSession: req.session.currentUser,
+         userInSession: req.session.currentUser
        });
     })
     .catch(err => console.log(err))

@@ -8,7 +8,6 @@ const parkSchema = new Schema(
     photo: String,
     water: Boolean,
     playObj: Boolean,
-    sterilized: Boolean,
     poopBags: Boolean,
     cafe: Boolean,
     crowded: String /*ASK FILIPE, choices*/,
