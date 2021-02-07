@@ -23,24 +23,6 @@ router.get("/user/:id/edit", (req, res, next) => {
     });
 });
 
-//POST user edit
-
-/* router.post(
-  "/user/:id/edit",
-  fileUploader.single("photo"),
-  (req, res, next) => {
-    req.body.photo = req.file.path;
-    User.findByIdAndUpdate(req.params.id, req.body)
-      .then((user) => {
-        console.log(user);
-        res.redirect("/user-profile");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-); */
-
 router.post("/user/:id/edit", fileUploader.single("photo"), (req, res) => {
   const { id } = req.params;
   let { username, currentPhoto } = req.body;

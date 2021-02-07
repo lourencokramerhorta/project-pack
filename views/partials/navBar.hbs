@@ -1,11 +1,15 @@
-{{#if notPartial}}
-{{else}}
+{{#unless notPartial}}
 <nav>
+  <a href='/home'>Home</a>
+  {{#if userInSession}}
   <form action="/logout" method="POST">
     <button>Log Out</button>
   </form>
+  <p>Hello, {{userInSession.username}}</p>
+  {{else}}
   <a href='/login'>Log in</a>
   <a href='/signup'>Sign up</a>
+  {{/if}}
 </nav>
 <hr>
-{{/if}}
+{{/unless}}

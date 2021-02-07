@@ -30,9 +30,7 @@ router.post("/login", (req, res, next) => {
         return;
       } else if (bcryptjs.compareSync(password, user.password)) {
         req.session.currentUser = user;
-        /*         console.log(user);
-        console.log(req.session); */
-        res.redirect("/user-profile");
+        res.redirect("/home");
       } else {
         res.render("auth/login", { errorMessage: "Wrong password." });
       }
@@ -43,7 +41,7 @@ router.post("/login", (req, res, next) => {
 //POST logout
 router.post("/logout", (req, res) => {
   req.session.destroy();
-  res.redirect("/");
+  res.redirect("/home");
 });
 
 //GET sign up
@@ -62,23 +60,9 @@ router.post("/signup", (req, res, next) => {
       return User.create({ email, username, password: passwordHash });
     })
     .then((user) => {
-      /* console.log(user); */
-      res.redirect("/");
+      res.redirect("/home");
     })
     .catch((err) => next(err));
 });
-
-//GET user profile ====== {MOVED TO USER.ROUTER}
-
-/* router.get("/user-profile", (req, res, next) => {
-  console.log(req.session);
-  User.findById(req.session.currentUser._id)
-    .populate("dogs")
-    .then((dbUser) =>
-      res.render("auth/user", { user: dbUser })
-    )
-    .catch(err => console.log(err));
-});
- */
 
 module.exports = router;

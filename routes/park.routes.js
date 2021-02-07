@@ -65,7 +65,10 @@ router.get("/parks/create-park", (req, res, next) => {
 router.get("/home", (req, res, next) => {
   Park.find()
     .then(parks => {
-       res.render("park/home", {parks});
+       res.render("park/home", {
+         parks,
+         userInSession: req.session.currentUser,
+       });
     })
     .catch(err => console.log(err))
 });
