@@ -1,25 +1,37 @@
+{{!-- DOG INFO --}}
 <h2>woof woof mother fucker, im {{ dog.name }}!</h2>
 <p>I`m a {{dog.age}} years old {{dog.breed}}</p>
 <p>size: {{dog.size}}</p>
 <p>sex: {{dog.sex}}</p>
 <p>Human: {{dog.human.username}}</p>
 <img src="{{dog.photo}}" alt="dog"><br>
-<button>
-  <a href="/dog/:id">Reload the page</a>
-</button>
-
+{{#if isUser}}
+<b>Edit dog here</b>
+{{/if}}
 <hr>
 
 {{!-- Human SECTION --}}
 <form action="/user-profile" method="GET">
   <button>My Human</button>
 </form>
+<hr>
 
+{{!-- DOG FRIENDS SECTION --}}
 {{#each dog.friends}}
 <div>
   <h3>{{name}}</h3>
   <a href="/dog/{{id}}">view dog</a>
-  <form action="/dog/{{id}}/delete" method="POST">
-    <button>Delete</button>
-  </form>
   {{/each}}
+</div>
+<hr>
+{{!-- DELETE DOG --}}
+{{#if isUser}}
+<form action="/dog/{{dog._id}}/delete" method="POST">
+  <button>Delete</button>
+</form>
+{{/if}}
+
+{{!-- ADD AS FRIEND SECTION --}}
+{{#unless isUser}}
+<b>Add as friend will be here!</b>
+{{/unless}}

@@ -52,7 +52,7 @@ router.post("/user/:id/edit", fileUploader.single("photo"), (req, res) => {
     );
 });
 
-router.get("/usersList", (req, res, next) => {
+router.get("/home/users", (req, res, next) => {
   User.find()
     .then((users) => {
       res.render("auth/userList", {

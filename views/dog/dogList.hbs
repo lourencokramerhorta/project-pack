@@ -1,8 +1,10 @@
+{{!-- TABS --}}
+{{> tabs}}
+<hr>
+
 <h2>All dogs</h2>
 
 {{#each dogs}}
-
 <h3>{{name}}</h3>
 <a href="/dog/{{id}}">get to know this dog</a>
-
 {{/each}}
