@@ -1,19 +1,18 @@
-{{!-- If user is logged in --}}
-{{#if user}}
+{{!-- USER INFO --}}
 <h2>Hello, {{ user.username }}!</h2>
 <p>This is your profile page my friend!</p>
 <img src="{{user.photo}}" alt="human"><br>
-<button>
-  <a href="/user-profile">Reload the page</a>
-</button>
+{{#if isUser}}
 <a href="/user/{{user.id}}/edit">Edit</a>
-
+{{/if}}
 <hr>
 
 {{!-- DOG SECTION --}}
+{{#if isUser}}
 <form action="/create-dog" method="GET">
   <button>Create New Dog</button>
 </form>
+{{/if}}
 
 {{#each user.dogs}}
 <div>
@@ -23,8 +22,15 @@
     <button>Delete</button>
   </form>
   {{/each}}
+<hr>
 
-  {{!-- If not logged in --}}
-  {{else}}
-  <p>Not logged in, sorry!</p>
-  {{/if}}
+{{!-- PARKS SECTION --}}
+<div>
+  PARK SECTION WILL BE HERE!
+</div>
+<hr>
+
+{{!-- SCHEDULE PLAY DATE --}}
+{{#unless isUser}}
+SCHEDULE PLAY DATE WILL BE HERE!
+{{/unless}}

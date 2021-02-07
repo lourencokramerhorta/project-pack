@@ -7,7 +7,19 @@ const fileUploader = require("../configs/cloudinary.config");
 router.get("/user-profile", (req, res, next) => {
   User.findById(req.session.currentUser._id)
     .populate("dogs")
-    .then((dbUser) => res.render("auth/user", { user: dbUser }))
+    .then((dbUser) => {
+      let isUser = false;
+      if (dbUser._id = req.session.currentUser._id) {
+        isUser = true;
+      } else {
+        isUser = false;
+      };
+      res.render("auth/user", {
+        user: dbUser,
+        userInSession: req.session.currentUser,
+        isUser
+      })
+    })
     .catch((err) => console.log(err));
 });
 
@@ -16,7 +28,10 @@ router.get("/user-profile", (req, res, next) => {
 router.get("/user/:id/edit", (req, res, next) => {
   User.findById(req.params.id)
     .then((user) => {
-      res.render("auth/userEdit", { user });
+      res.render("auth/userEdit", {
+        user,
+        userInSession: req.session.currentUser,
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -26,7 +41,6 @@ router.get("/user/:id/edit", (req, res, next) => {
 router.post("/user/:id/edit", fileUploader.single("photo"), (req, res) => {
   const { id } = req.params;
   let { username, currentPhoto } = req.body;
-  console.log(req.file);
   if (req.file) {
     currentPhoto = req.file.path;
   }
@@ -41,7 +55,10 @@ router.post("/user/:id/edit", fileUploader.single("photo"), (req, res) => {
 router.get("/usersList", (req, res, next) => {
   User.find()
     .then((users) => {
-      res.render("auth/userList", { users });
+      res.render("auth/userList", {
+        users,
+        userInSession: req.session.currentUser,
+      });
     })
     .catch((err) => {
       console.log(err);

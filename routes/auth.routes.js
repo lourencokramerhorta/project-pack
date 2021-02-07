@@ -15,7 +15,6 @@ router.get("/login", (req, res) => res.render("auth/login"));
 //POST login
 router.post("/login", (req, res, next) => {
   const { username, password } = req.body;
-  /* console.log(req.body); */
   if (username === "" || password === "") {
     res.render("auth/login", {
       errorMessage: "enter both user and password",
