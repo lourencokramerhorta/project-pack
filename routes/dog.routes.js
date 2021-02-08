@@ -6,18 +6,24 @@ const Dog = require("../models/Dog.model");
 const User = require("../models/User.model");
 const fileUploader = require("../configs/cloudinary.config");
 
-//GET dog/:id
+//GET dog/:id 
 router.get("/dog/:id", (req, res, next) => {
   Dog.findById(req.params.id)
     .populate("human")
     .then((dog) => {
+      console.log(dog.human._id);
+      console.log(dog.human.username);
       let isUser = false;
       if ((dog.human._id = req.session.currentUser._id)) {
         isUser = true;
       } else {
         isUser = false;
       }
-      res.render("dog/dog", { dog, userInSession: req.session.currentUser, isUser });
+      res.render("dog/dog", {
+        dog,
+        userInSession: req.session.currentUser,
+        isUser,
+      });
     })
     .catch((err) => {
       console.log("error wen creating dog page");

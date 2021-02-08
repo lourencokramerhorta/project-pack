@@ -11,11 +11,11 @@
 <hr>
 
 {{!-- Human SECTION --}}
-<form action="/user-profile" method="GET">
+<form action="/user-profile/{{dog.human._id}}" method="GET">
   <button>My Human</button>
 </form>
 <hr>
-
+<p>{{dog.human._id}}</p>
 {{!-- DOG FRIENDS SECTION --}}
 {{#each dog.friends}}
 <div>
