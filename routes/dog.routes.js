@@ -1,78 +1,72 @@
 //Require express and create router
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 //Require User and Dog Models
-const Dog = require("../models/Dog.model");
-const User = require("../models/User.model");
-const fileUploader = require("../configs/cloudinary.config");
+const Dog = require('../models/Dog.model');
+const User = require('../models/User.model');
+const fileUploader = require('../configs/cloudinary.config');
 
 //GET dog/:id
-router.get("/dog/:id", (req, res, next) => {
-  console.log(req.params);
+router.get('/dog/:id', (req, res, next) => {
+  const { currentUser } = req.session;
   Dog.findById(req.params.id)
-    .populate("human")
+    .populate('human')
     .then((dog) => {
-      console.log(dog);
-      console.log(dog.human.username);
-      let isUser = false;
-      if ((dog.human._id = req.session.currentUser._id)) {
-        isUser = true;
-      } else {
-        isUser = false;
-      }
-      console.log(isUser);
-      res.render("dog/dog", {
+      const isOwner = currentUser._id === dog.human._id;
+      res.render('dog/dog', {
         dog,
-        userInSession: req.session.currentUser,
-        isUser,
+        currentUser,
+        isOwner,
       });
     })
     .catch((err) => {
-      console.log("error wen creating dog page");
+      console.log('error wen creating dog page');
     });
 });
 
 //GET create-dog
-router.get("/create-dog", (req, res, next) => {
-  res.render("dog/createDog", { userInSession: req.session.currentUser });
+router.get('/create-dog', (req, res, next) => {
+  res.render('dog/createDog', { userInSession: req.session.currentUser });
 });
 
 //POST create-dog
-router.post("/create-dog", fileUploader.single("photo"), (req, res, next) => {
+router.post('/create-dog', fileUploader.single('photo'), (req, res, next) => {
   const { name, breed, age, sex, size } = req.body;
+  const { _id: user_id } = req.session.currentUser;
   console.log(req.body);
+  const photo = req.file ? req.file.path : undefined;
   Dog.create({
     name,
     breed,
     age,
-    human: req.session.currentUser._id,
+    human: user_id,
     sex,
     size,
-    photo: req.file.path,
+    photo,
   })
     .then((createdDog) => {
-      return User.findByIdAndUpdate(req.session.currentUser, {
+      return User.findByIdAndUpdate(user_id, {
         $push: { dogs: createdDog._id },
       });
     })
-    .then(res.redirect("/user-profile"))
+    .then(res.redirect(`/user-profile/${user_id}`))
     .catch((err) => console.log(err));
 });
 
-router.post("/dog/:id/delete", (req, res, next) => {
+router.post('/dog/:id/delete', (req, res, next) => {
   Dog.findByIdAndRemove(req.params.id)
     .then(() => {
-      res.redirect("/user-profile");
+      res.redirect('/user-profile');
     })
     .then((err) => {
       return err;
     });
 });
 
-router.get("/home/dogs", (req, res, next) => {
+router.get('/home/dogs', (req, res, next) => {
   Dog.find()
     .then((dogs) => {
-      res.render("dog/dogList", {
+      res.render('dog/dogList', {
         dogs,
         userInSession: req.session.currentUser,
       });
