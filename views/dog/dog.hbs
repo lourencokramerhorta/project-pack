@@ -5,7 +5,7 @@
 <p>sex: {{dog.sex}}</p>
 <p>Human: {{dog.human.username}} {{dog.human.name}}</p>
 <img src="{{dog.photo}}" alt="dog"><br>
-{{#if isUser}}
+{{#if isOwner}}
 <b>Edit dog here</b>
 {{/if}}
 <hr>
@@ -22,13 +22,13 @@
 </div>
 <hr>
 {{!-- DELETE DOG --}}
-{{#if isUser}}
+{{#if isOwner}}
 <form action="/dog/{{dog._id}}/delete" method="POST">
   <button>Delete</button>
 </form>
 {{/if}}
 
 {{!-- ADD AS FRIEND SECTION --}}
-{{#unless isUser}}
+{{#unless isOwner}}
 <b>Add as friend will be here!</b>
 {{/unless}}

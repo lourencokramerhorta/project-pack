@@ -23,19 +23,14 @@ const fileUploader = require("../configs/cloudinary.config");
     .catch((err) => console.log(err));
 }); */
 router.get("/user-profile/:id", (req, res, next) => {
-  let isUser = false;
-  if (req.session.currentUser._id === req.params.id) {
-    isUser = true;
-  } else {
-    isUser = false;
-  }
+  const isUser = req.session.currentUser._id === req.params.id;
   if (isUser) {
     User.findById(req.session.currentUser._id)
       .populate("dogs")
       .then((dbUser) => {
         res.render("user/user", {
           user: dbUser,
-          userInSession: req.session.currentUser,
+          currentUser: req.session.currentUser,
           isUser,
         });
       })
@@ -46,7 +41,7 @@ router.get("/user-profile/:id", (req, res, next) => {
       .then((dbUser) => {
         res.render("user/user", {
           user: dbUser,
-          userInSession: req.session.currentUser,
+          currentUser: req.session.currentUser,
           isUser,
         });
       })
@@ -61,7 +56,7 @@ router.get("/user/:id/edit", (req, res, next) => {
     .then((user) => {
       res.render("user/userEdit", {
         user,
-        userInSession: req.session.currentUser,
+        currentUser: req.session.currentUser,
       });
     })
     .catch((err) => {
@@ -77,7 +72,7 @@ router.post("/user/:id/edit", fileUploader.single("photo"), (req, res) => {
   }
 
   User.findByIdAndUpdate(id, { username, photo: currentPhoto }, { new: true })
-    .then(() => res.redirect(`/user-profile`))
+    .then(() => res.redirect(`/user-profile/${id}`))
     .catch((error) =>
       console.log(`Error while updating a single user: ${error}`)
     );
@@ -88,7 +83,7 @@ router.get("/home/users", (req, res, next) => {
     .then((users) => {
       res.render("user/userList", {
         users,
-        userInSession: req.session.currentUser,
+        currentUser: req.session.currentUser,
       });
     })
     .catch((err) => {

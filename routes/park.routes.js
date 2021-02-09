@@ -9,7 +9,7 @@ const Park = require("../models/Park.model");
 router.get("/parks/park/:id", (req, res, next) => {
   Park.findById(req.params.id)
     .then((park) => {
-      res.render("park/park", { park, userInSession: req.session.currentUser });
+      res.render("park/park", { park, currentUser: req.session.currentUser });
     })
     .catch((err) => console.log(err));
 });
@@ -51,7 +51,7 @@ router.post(
 
 //GET parks/create-park
 router.get("/parks/create-park", (req, res, next) => {
-  res.render("park/createPark", { userInSession: req.session.currentUser });
+  res.render("park/createPark", { currentUser: req.session.currentUser });
 });
 
 //GET home
@@ -60,7 +60,7 @@ router.get("/home", (req, res, next) => {
     .then((parks) => {
       res.render("park/home", {
         parks,
-        userInSession: req.session.currentUser,
+        currentUser: req.session.currentUser,
       });
     })
     .catch((err) => console.log(err));

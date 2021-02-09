@@ -26,7 +26,7 @@ router.get('/dog/:id', (req, res, next) => {
 
 //GET create-dog
 router.get('/create-dog', (req, res, next) => {
-  res.render('dog/createDog', { userInSession: req.session.currentUser });
+  res.render('dog/createDog', { currentUser: req.session.currentUser });
 });
 
 //POST create-dog
@@ -56,7 +56,7 @@ router.post('/create-dog', fileUploader.single('photo'), (req, res, next) => {
 router.post('/dog/:id/delete', (req, res, next) => {
   Dog.findByIdAndRemove(req.params.id)
     .then(() => {
-      res.redirect('/user-profile');
+      res.redirect(`/user-profile/${req.params.id}`);
     })
     .then((err) => {
       return err;
@@ -64,11 +64,12 @@ router.post('/dog/:id/delete', (req, res, next) => {
 });
 
 router.get('/home/dogs', (req, res, next) => {
+  const { currentUser } = req.session;
   Dog.find()
     .then((dogs) => {
       res.render('dog/dogList', {
         dogs,
-        userInSession: req.session.currentUser,
+        currentUser,
       });
     })
     .catch((err) => {
