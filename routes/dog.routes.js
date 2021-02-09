@@ -20,7 +20,7 @@ router.get('/dog/:id', (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log('error wen creating dog page');
+      console.log('error when rendering dog page');
     });
 });
 
