@@ -6,12 +6,13 @@ const Dog = require("../models/Dog.model");
 const User = require("../models/User.model");
 const fileUploader = require("../configs/cloudinary.config");
 
-//GET dog/:id 
+//GET dog/:id
 router.get("/dog/:id", (req, res, next) => {
+  console.log(req.params);
   Dog.findById(req.params.id)
     .populate("human")
     .then((dog) => {
-      console.log(dog.human._id);
+      console.log(dog);
       console.log(dog.human.username);
       let isUser = false;
       if ((dog.human._id = req.session.currentUser._id)) {
@@ -19,6 +20,7 @@ router.get("/dog/:id", (req, res, next) => {
       } else {
         isUser = false;
       }
+      console.log(isUser);
       res.render("dog/dog", {
         dog,
         userInSession: req.session.currentUser,

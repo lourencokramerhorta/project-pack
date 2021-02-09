@@ -107,7 +107,7 @@ router.get("/home/users", (req, res, next) => {
 
 module.exports = router;
 
-router.get("user-profile/:id", (req, res, next) => {
+/* router.get("user-profile/:id", (req, res, next) => {
   if (req.session.currentUser._id === req.params.id) {
     User.findById(req.session.currentUser._id)
       .populate("dogs")
@@ -133,4 +133,4 @@ router.get("user-profile/:id", (req, res, next) => {
       })
       .catch((err) => console.log(err));
   }
-});
+}); */
