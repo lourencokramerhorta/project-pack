@@ -21,7 +21,8 @@ router.post(
   (req, res, next) => {
     const {
       name,
-      location,
+      longitude,
+      latitude,
       water,
       playObj,
       poopBags,
@@ -32,7 +33,10 @@ router.post(
     } = req.body;
     Park.create({
       name,
-      location,
+      location: {
+      type: 'Point',
+      coordinates: [longitude, latitude]
+    },
       photo: req.file.path,
       water,
       playObj,

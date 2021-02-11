@@ -13,7 +13,7 @@ const dogSchema = new Schema(
         "https://media2.s-nbcnews.com/j/newscms/2016_22/1562491/ap_16154563031509_937210859065e41391a67eed87ecef07.fit-2000w.jpg",
     },
     human: { type: Schema.Types.ObjectId, ref: "User" },
-    location: [] /*ASK FILIPE, get from User*/,
+    location: { type: {type: String }, coordinates: [Number] },
     bio: String,
     sterilized: Boolean,
     size: Array /*ASK FILIPE,choices*/,
@@ -26,5 +26,6 @@ const dogSchema = new Schema(
     timestamps: true,
   }
 );
+dogSchema.index({ location: "2dsphere" });
 
 module.exports = model("Dog", dogSchema);

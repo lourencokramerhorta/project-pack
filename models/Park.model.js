@@ -4,7 +4,8 @@ const { Schema, model } = mongoose;
 const parkSchema = new Schema(
   {
     name: String,
-    location: [] /*ASK FILIPE, get from User*/,
+    location: { type: {type: String}, coordinates: [Number]
+    },
     photo: String,
     water: Boolean,
     playObj: Boolean,
@@ -19,5 +20,7 @@ const parkSchema = new Schema(
     timestamps: true,
   }
 );
+
+parkSchema.index({ location: "2dsphere" });
 
 module.exports = model("Park", parkSchema);

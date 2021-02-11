@@ -1,7 +1,5 @@
 {{!-- MAP --}}
-<div>
-  <h2>MAP WILL BE HERE!</h2>
-</div>
+<div id='map'></div>
 <hr>
 {{!-- W/ SESSION --}}
 {{#if currentUser}}
@@ -19,3 +17,6 @@
 </div>
 {{/each}}
 {{/if}}
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{process.env.GOOGLEMAPS_API}}"></script>
+<script type="text/javascript" src="/javascripts/script.js"></script>
