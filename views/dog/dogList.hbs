@@ -3,6 +3,13 @@
 <hr>
 
 <h2>All dogs</h2>
+<form action="/home/dogs/search" method="GET">
+  <label>
+    Search Dog:
+    <input type="text" name="name">
+  </label>
+  <button type="submit">SEARCH</button>
+</form>
 
 {{#each dogs}}
 <h3>{{name}}</h3>
