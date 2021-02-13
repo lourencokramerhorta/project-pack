@@ -1,5 +1,9 @@
 {{!-- MAP --}}
 <div id='map'></div>
+<div id="geocoder">
+  <input id="address" type="textbox"/>
+  <input id="submit" type="button" value="Geocode"/>
+</div>
 <hr>
 {{!-- W/ SESSION --}}
 {{#if currentUser}}
@@ -18,6 +22,3 @@
 {{/each}}
 {{/if}}
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtjl-KhhPk8lLmvIL6RemmOydOkSBn_YQ"></script>
-<script type="text/javascript" src="/javascripts/script.js"></script>
