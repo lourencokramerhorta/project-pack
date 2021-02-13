@@ -17,9 +17,14 @@ if (navigator.geolocation) {
 //LOAD WINDOW
 window.addEventListener("load", () => {
   const mapElement = document.getElementById("map");
+  const createParkHome = document.getElementById("create-park-home");
+
+  function redirectToParkWCoord(lat, lng, address) {
+  createParkHome.href = `/parks/create-park?lat=${lat}&lng=${lng}&address=${address}`;
+}
 
   //Function geocodeAddress
-  function geocodeAddress(geocoder, resultsMap) {
+  function geocodeAddress(geocoder, resultsMap, dataFunction) {
     const address = document.getElementById("address").value;
     geocoder.geocode({ address: address }, (results, status) => {
       if (status === "OK") {
@@ -28,9 +33,12 @@ window.addEventListener("load", () => {
           map: resultsMap,
           position: results[0].geometry.location,
         });
-        document.getElementById(
-          "create-park-home"
-        ).href = `/parks/create-park?lat=${results[0].geometry.location.lat()}&lng=${results[0].geometry.location.lng()}&address=${address}`;
+        dataFunction(
+          results[0].geometry.location.lat(),
+          results[0].geometry.location.lng(),
+          address
+        );
+       
       } else {
         console.log(
           `Geocode was not successful for the following reason: ${status}`
@@ -57,7 +65,7 @@ window.addEventListener("load", () => {
   //Function getParks
   function getParks(map) {
     axios
-      .get("home/api")
+      .get("/home/api")
       .then((response) => {
         console.log(response);
         placeParks(response.data.parks, map);
@@ -80,7 +88,7 @@ window.addEventListener("load", () => {
 
     //Get geolocation from address
     document.getElementById("submit").addEventListener("click", () => {
-      geocodeAddress(geocoder, map);
+      geocodeAddress(geocoder, map, redirectToParkWCoord);
     });
   }
 });
