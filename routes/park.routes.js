@@ -55,7 +55,9 @@ router.post(
 
 //GET parks/create-park
 router.get("/parks/create-park", (req, res, next) => {
-  res.render("park/createPark", { currentUser: req.session.currentUser });
+  console.log(req.query);
+  const { lat, lng, address } = req.query;
+  res.render("park/createPark", { currentUser: req.session.currentUser, lat, lng, address });
 });
 
 // GET /home/api
