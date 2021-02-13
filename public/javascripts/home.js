@@ -18,10 +18,18 @@ if (navigator.geolocation) {
 window.addEventListener("load", () => {
   const mapElement = document.getElementById("map");
   const createParkHome = document.getElementById("create-park-home");
+  const createParkSubmit = document.getElementById("create-park-submit");
+  const latElement = document.getElementById("latitude");
+  const lngElement = document.getElementById("longitude");
 
   function redirectToParkWCoord(lat, lng, address) {
-  createParkHome.href = `/parks/create-park?lat=${lat}&lng=${lng}&address=${address}`;
-}
+    createParkHome.href = `/parks/create-park?lat=${lat}&lng=${lng}&address=${address}`;
+  }
+
+  function changeCoordInputs(lat, lng) {
+    latElement.value = lat;
+    lngElement.value = lng;
+  }
 
   //Function geocodeAddress
   function geocodeAddress(geocoder, resultsMap, dataFunction) {
@@ -38,7 +46,6 @@ window.addEventListener("load", () => {
           results[0].geometry.location.lng(),
           address
         );
-       
       } else {
         console.log(
           `Geocode was not successful for the following reason: ${status}`
@@ -59,6 +66,14 @@ window.addEventListener("load", () => {
         map: map,
         title: park.name,
       });
+      const contentString = `<div>
+      <h4>${park.name}</h4>
+      <img src="${park.photo}" alt="park">
+      <a href="/parks/park/${park._id}">View</a>
+      </div>`;
+      console.log(contentString);
+      const infoWindow = new google.maps.InfoWindow({ content: contentString });
+      pin.addListener('click', () => { infoWindow.open(map, pin) });
     }
   }
 
@@ -73,6 +88,16 @@ window.addEventListener("load", () => {
       .catch((err) => console.log(err));
   }
 
+  //Function getParkFromHome
+  function getParkFromHome(lat, lng, map) {
+    const pin = new google.maps.Marker({
+      position: { lat: lat, lng: lng },
+      map: map,
+    });
+    console.log(pin);
+    map.setCenter(pin.position);
+  }
+
   if (mapElement) {
     //Initialize map
     const map = new google.maps.Map(mapElement, {
@@ -83,12 +108,22 @@ window.addEventListener("load", () => {
     //Get parks in map
     getParks(map);
 
+    //Get park from Home
+    if (createParkSubmit) {
+      getParkFromHome(Number(latElement.value), Number(lngElement.value), map);
+    }
+
     //Initialize geocoder
     const geocoder = new google.maps.Geocoder();
 
     //Get geolocation from address
     document.getElementById("submit").addEventListener("click", () => {
-      geocodeAddress(geocoder, map, redirectToParkWCoord);
+      if (createParkHome) {
+        geocodeAddress(geocoder, map, redirectToParkWCoord);
+      }
+      if (createParkSubmit) {
+        geocodeAddress(geocoder, map, changeCoordInputs);
+      }
     });
   }
 });
