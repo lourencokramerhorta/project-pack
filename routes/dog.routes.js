@@ -64,8 +64,17 @@ router.post("/dog/:id/delete", (req, res, next) => {
 });
 router.get("/home/dogs/search", (req, res, next) => {
   const { currentUser } = req.session;
-  console.log(req.query);
-  Dog.find(req.query)
+  const { name, size, minAge, maxAge } = req.query;
+
+  console.log("this is a query", req.query);
+
+  Dog.find({
+    $and: [
+      { name: { $regex: name, $options: "i" } },
+      { size: { $regex: size, $options: "i" } },
+      { age: { $gte: minAge, $lte: maxAge } },
+    ],
+  })
     .then((dogs) => {
       res.render("dog/dogList", {
         dogs,
