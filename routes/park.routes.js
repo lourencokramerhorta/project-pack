@@ -58,6 +58,15 @@ router.get("/parks/create-park", (req, res, next) => {
   res.render("park/createPark", { currentUser: req.session.currentUser });
 });
 
+// GET /home/api
+router.get('/home/api', (req, res, next) => {
+  Park.find()
+    .then((allParksFromDB) => {
+      res.status(200).json({ parks: allParksFromDB });
+    })
+  .catch(err => console.log(err))
+});
+
 //GET home
 router.get("/home", (req, res, next) => {
   Park.find()
@@ -70,4 +79,19 @@ router.get("/home", (req, res, next) => {
     .catch((err) => console.log(err));
 });
 
+
+
+// // to see raw data in your browser, just go on: http://localhost:3000/api/someIdHere
+// router.get('/api/:id', (req, res, next) => {
+// 	let restaurantId = req.params.id;
+// 	Restaurant.findOne({_id: restaurantId}, (error, oneRestaurantFromDB) => {
+// 		if (error) { 
+// 			next(error) 
+// 		} else { 
+// 			res.status(200).json({ restaurant: oneRestaurantFromDB }); 
+// 		}
+// 	});
+// });
+
 module.exports = router;
+
