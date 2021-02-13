@@ -78,22 +78,13 @@ router.post("/user/:id/edit", fileUploader.single("photo"), (req, res) => {
     );
 });
 
-router.get("/home/users/search", (req, res, next) => {
-  console.log(req.query);
-  User.find(req.query)
-    .then((users) => {
-      res.render("user/userList", {
-        users,
-        currentUser: req.session.currentUser,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
 router.get("/home/users", (req, res, next) => {
-  User.find()
+  let { username } = req.query;
+  console.log(username);
+  if (username === undefined) {
+    username = "";
+  }
+  User.find({ username: { $regex: username, $options: "i" } })
     .then((users) => {
       res.render("user/userList", {
         users,
