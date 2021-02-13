@@ -7,13 +7,13 @@
   <label>
     Search Dog:
     <input type="text" name="name">
-  </label>
+  </label><br>
 
 
 
   <label>Age range</label>
   <input type="number" name="minAge" value="0" max="25" min="0">
-  <input type="number" name="maxAge" value="25" max="25" min="0">
+  <input type="number" name="maxAge" value="25" max="25" min="0"><br>
 
 
   <label>Choose size</label>
@@ -22,6 +22,31 @@
     <option value="small">Small</option>
     <option value="medium">Medium</option>
     <option value="large">Large</option>
+  </select><br>
+
+  <label>Sex:</label>
+  <select name="sex" id="sex">
+    <option value="">Any</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select><br>
+
+  <label for="sterilized">sterilized</label>
+  <input type="checkbox" value="true" name="sterilized" id="sterilized"><br>
+
+  <label>Choose breed</label>
+  <select name="breed" id="breed">
+    <option value="">Any</option>
+    <option value="Labrador">Labrador</option>
+    <option value="German Shepherd Dog">German Shepherd Dog</option>
+    <option value="Retriever">Retriever</option>
+    <option value="French Bulldog">French Bulldog</option>
+    <option value="Bulldog">Bulldog</option>
+    <option value="Poodle">Poodle</option>
+    <option value="Beagle">Beagle</option>
+    <option value="Rottweiler">Rottweiler</option>
+    <option value="German Shorthaired">German Shorthaired</option>
+    <option value="Pembroke Welsh Corgi">Pembroke Welsh Corgi</option>
   </select><br>
 
   <button type="submit">SEARCH</button>

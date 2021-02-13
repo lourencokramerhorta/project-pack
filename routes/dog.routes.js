@@ -31,10 +31,11 @@ router.get("/create-dog", (req, res, next) => {
 
 //POST create-dog
 router.post("/create-dog", fileUploader.single("photo"), (req, res, next) => {
-  const { name, breed, age, sex, size } = req.body;
+  let { name, breed, age, sex, size, sterilized } = req.body;
   const { _id: user_id } = req.session.currentUser;
   console.log(req.body);
   const photo = req.file ? req.file.path : undefined;
+  sterilized = !!sterilized;
   Dog.create({
     name,
     breed,
@@ -43,6 +44,7 @@ router.post("/create-dog", fileUploader.single("photo"), (req, res, next) => {
     sex,
     size,
     photo,
+    sterilized,
   })
     .then((createdDog) => {
       return User.findByIdAndUpdate(user_id, {
@@ -64,7 +66,9 @@ router.post("/dog/:id/delete", (req, res, next) => {
 });
 router.get("/home/dogs/search", (req, res, next) => {
   const { currentUser } = req.session;
-  const { name, size, minAge, maxAge } = req.query;
+  let { name, size, minAge, maxAge, breed, sex, sterilized } = req.query;
+  sterilized = !!sterilized;
+  console.log(sterilized);
 
   console.log("this is a query", req.query);
 
@@ -72,7 +76,10 @@ router.get("/home/dogs/search", (req, res, next) => {
     $and: [
       { name: { $regex: name, $options: "i" } },
       { size: { $regex: size, $options: "i" } },
+      { breed: { $regex: breed, $options: "i" } },
       { age: { $gte: minAge, $lte: maxAge } },
+      { sex: { $regex: sex, $options: "i" } },
+      { sterilized: sterilized },
     ],
   })
     .then((dogs) => {

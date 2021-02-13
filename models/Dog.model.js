@@ -5,8 +5,26 @@ const dogSchema = new Schema(
   {
     name: String,
     age: Number,
-    sex: Array /*ASK FILIPE,choices*/,
-    breed: Array,
+    sex: {
+      type: String,
+      enum: ["Male", "Female"],
+      required: [true, "Sex parameter required"],
+    },
+    breed: {
+      type: String,
+      enum: [
+        "Labrador",
+        "German Shepherd Dog",
+        "Retriever",
+        "French Bulldog",
+        "Bulldog",
+        "Poodle",
+        "Beagle",
+        "Rottweiler",
+        "German Shorthaired",
+        "Pembroke Welsh Corgi",
+      ],
+    },
     photo: {
       type: String,
       default:
