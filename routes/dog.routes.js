@@ -33,7 +33,6 @@ router.get("/create-dog", (req, res, next) => {
 router.post("/create-dog", fileUploader.single("photo"), (req, res, next) => {
   let { name, breed, age, sex, size, sterilized } = req.body;
   const { _id: user_id } = req.session.currentUser;
-  console.log(req.body);
   const photo = req.file ? req.file.path : undefined;
   sterilized = !!sterilized;
   Dog.create({

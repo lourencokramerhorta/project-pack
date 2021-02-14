@@ -1,0 +1,22 @@
+<h2>Messages with {{chatUser.username}}</h2>
+
+{{#each messages}}
+
+<div>
+  <h5>{{from.username}}</h5>
+  <img src="{{from.photo}}" alt="user">
+  <p>{{content}}</p>
+  <p>{{createdAt}}</p>
+</div>
+
+{{/each}}
+
+<hr>
+
+<h2>Send message</h2>
+
+<form action="/user-profile/{{chatUser._id}}/chat" method="post">
+  <label for="content">Message:</label><br>
+  <input type="text" id="content" name="content"><br>
+  <button>Send</button>
+</form>
