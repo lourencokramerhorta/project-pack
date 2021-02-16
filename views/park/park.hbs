@@ -1,6 +1,12 @@
+{{!-- HIDDEN INFO --}}
+<p style="display: none" id="parkView">{{park.id}}</p>
+
+{{!-- MAP --}}
+<div id='map'></div>
+<hr>
+
 {{!-- PARK INFO --}}
 <h2>{{park.name}}</h2>
-<p>Location: {{park.location}}</p>
 <p>Size: {{park.size}}</p>
 <img src="{{park.photo}}" alt="park">
 <p>Water: {{park.water}}</p>
@@ -12,17 +18,30 @@
 <p>Size: {{park.size}}</p>
 
 <b>SCORE WILL BE HERE</b>
+<hr>
 <b>ADD TO FAVORITE WILL BE HERE</b>
 <hr>
 {{!-- REVIEWS --}}
 <div>
-THE REVIEWS WILL BE HERE
-</div>
-<b>ADD COMMENTS WILL BE HERE</b>
-<hr>
-{{!-- MAP --}}
+<h4>Reviews</h4>
+{{#each reviews}}
 <div>
-  THE MAP WILL BE HERE
+  <h5>{{username.username}}</h5>
+  <p>Score: {{score}}</p>
+  <p>Content: {{content}}</p>
+</div>
+{{/each}}
+
+<h4>Review park:</h4>
+<form action="/parks/park/{{park.id}}" method="POST">
+  <label for="input-score">Rating:</label>
+  <input type="number" id="input-score" name="score"/>
+
+  <label for="input-content">Review:</label>
+  <input type="text" name="content" id="input-content"/>
+
+  <button type="submit">Submit</button>
+</form>
 </div>
 <hr>
 {{!-- DOGS --}}

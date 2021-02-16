@@ -4,16 +4,28 @@ const { Schema, model } = mongoose;
 const parkSchema = new Schema(
   {
     name: String,
-    location: { type: {type: String}, coordinates: [Number]
+    location: { type: { type: String }, coordinates: [Number] },
+    photo: {
+      type: String,
+      default:
+        "https://media2.s-nbcnews.com/j/newscms/2016_22/1562491/ap_16154563031509_937210859065e41391a67eed87ecef07.fit-2000w.jpg",
     },
-    photo: String,
     water: Boolean,
     playObj: Boolean,
     poopBags: Boolean,
     cafe: Boolean,
-    crowded: String /*ASK FILIPE, choices*/,
-    ground: String /*ASK FILIPE, choices*/,
-    size: String /*ASK FILIPE, choices*/,
+    crowded: {
+      type: String,
+      enum: ["Never", "Sometimes", "Always"],
+    },
+    ground: {
+      type: String,
+      enum: ["Muddy", "Sand", "Grass", "Stones"],
+    },
+    size: {
+      type: String,
+      enum: ["Small", "Medium", "Large"],
+    },
     score: Number,
   },
   {

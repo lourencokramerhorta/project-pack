@@ -19,6 +19,7 @@ window.addEventListener("load", () => {
   const mapElement = document.getElementById("map");
   const createParkHome = document.getElementById("create-park-home");
   const createParkSubmit = document.getElementById("create-park-submit");
+  const parkView = document.getElementById("parkView");
   const latElement = document.getElementById("latitude");
   const lngElement = document.getElementById("longitude");
 
@@ -66,21 +67,23 @@ window.addEventListener("load", () => {
         map: map,
         title: park.name,
       });
+      if (parkView) {
+        map.setCenter(pin.position);
+      }
       const contentString = `<div>
       <h4>${park.name}</h4>
       <img src="${park.photo}" alt="park">
       <a href="/parks/park/${park._id}">View</a>
       </div>`;
-      console.log(contentString);
       const infoWindow = new google.maps.InfoWindow({ content: contentString });
       pin.addListener('click', () => { infoWindow.open(map, pin) });
     }
   }
 
   //Function getParks
-  function getParks(map) {
+  function getParks(map, route) {
     axios
-      .get("/home/api")
+      .get(route)
       .then((response) => {
         console.log(response);
         placeParks(response.data.parks, map);
@@ -106,7 +109,11 @@ window.addEventListener("load", () => {
     });
 
     //Get parks in map
-    getParks(map);
+    if (parkView) {
+      getParks(map, `/home/api/${parkView.innerHTML}`);
+    } else {
+      getParks(map, "/home/api");
+    }
 
     //Get park from Home
     if (createParkSubmit) {
