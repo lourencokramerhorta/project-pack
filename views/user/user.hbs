@@ -1,33 +1,34 @@
-{{!-- USER INFO --}}
-<h2>Hello, {{ user.username }}!</h2>
-<p>This is your profile page my friend!</p>
-<img src="{{user.photo}}" alt="human"><br>
-{{#if isUser}}
-<a href="/user/{{user.id}}/edit">Edit</a>
-{{/if}}
-<hr>
+<div class="row">
+  <div class="bg-white shadow rounded overflow-hidden">
+    <div class="px-4 pt-0 pb-4 cover">
+      <div class="media align-items-end profile-head">
 
-{{!-- DOG SECTION --}}
-{{#if isUser}}
-<form action="/create-dog" method="GET">
-  <button>Create New Dog</button>
-</form>
-{{/if}}
+        <div class="profile mr-3">
 
-{{#each user.dogs}}
-<div>
-  <h3>{{name}}</h3>
-  <a href="/dog/{{id}}">view dog</a>
-  {{/each}}
-  <hr>
+          <img src="{{user.photo}}" alt="human" width="600" height="auto" class="rounded mb-2 img-thumbnail">
 
-  {{!-- PARKS SECTION --}}
-  <div>
-    PARK SECTION WILL BE HERE!
+          {{#if isUser}}
+          <a href="/user/{{user.id}}/edit" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+          <a href="/create-dog" class="btn btn-outline-dark btn-sm btn-block">Create New Dog</a>
+
+          {{/if}}
+        </div>
+
+        <div class="media-body mb-5 text-white">
+          <h4 class="mt-0 mb-0">{{ user.username }}</h4>
+        </div>
+        {{#each user.dogs}}
+        <div>
+          <h3>{{name}}</h3>
+          <img src="{{photo}}" alt="dog" width="100" height="auto" class="rounded mb-2 img-thumbnail">
+          <a href="/dog/{{id}}">view dog</a>
+          {{/each}}
+          <hr>
+
+          {{#unless isUser}}
+          <a href="/user-profile/{{user.id}}/chat">SCHEDULE PLAY DATE!</a>
+          {{/unless}}
+        </div>
+      </div>
+    </div>
   </div>
-  <hr>
-
-  {{!-- SCHEDULE PLAY DATE --}}
-  {{#unless isUser}}
-  <a href="/user-profile/{{user.id}}/chat">SCHEDULE PLAY DATE!</a>
-  {{/unless}}
