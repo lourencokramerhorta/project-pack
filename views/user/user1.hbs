@@ -1,0 +1,33 @@
+{{!-- USER INFO --}}
+<h2>Hello, {{ user.username }}!</h2>
+<p>This is your profile page my friend!</p>
+<img src="{{user.photo}}" alt="human"><br>
+{{#if isUser}}
+<a href="/user/{{user.id}}/edit">Edit</a>
+{{/if}}
+<hr>
+
+{{!-- DOG SECTION --}}
+{{#if isUser}}
+<form action="/create-dog" method="GET">
+  <button>Create New Dog</button>
+</form>
+{{/if}}
+
+{{#each user.dogs}}
+<div>
+  <h3>{{name}}</h3>
+  <a href="/dog/{{id}}">view dog</a>
+  {{/each}}
+  <hr>
+
+  {{!-- PARKS SECTION --}}
+  <div>
+    PARK SECTION WILL BE HERE!
+  </div>
+  <hr>
+
+  {{!-- SCHEDULE PLAY DATE --}}
+  {{#unless isUser}}
+  <a href="/user-profile/{{user.id}}/chat">SCHEDULE PLAY DATE!</a>
+  {{/unless}}
