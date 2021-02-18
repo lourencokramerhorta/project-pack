@@ -6,6 +6,18 @@ const mongoose = require("mongoose");
 //Require Park Model
 const Park = require("../models/Park.model");
 const Review = require("../models/Review.model");
+const User= require("../models/User.model");
+
+//POST parks/park/:id/addFav
+
+router.post('/parks/park/:id/addFav', (req, res, next) => {
+  const { id } = req.params;
+  User.findByIdAndUpdate(req.session.currentUser, {
+    $push: { parks: id },
+  })
+    .then(() => {res.redirect(`/parks/park/${id}`)})
+    .catch(err => console.log(err));
+})
 
 //POST parks/park/:id
 router.post("/parks/park/:id", (req, res, next) => {

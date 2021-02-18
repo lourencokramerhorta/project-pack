@@ -19,7 +19,9 @@
 
 <b><p>Score: {{park.score}}</p></b>
 <hr>
-<b>ADD TO FAVORITE WILL BE HERE</b>
+<form action="/parks/park/{{park.id}}/addFav" method="POST">
+  <button type="submit">Add to favorite</button>
+</form>
 <hr>
 {{!-- REVIEWS --}}
 <div>

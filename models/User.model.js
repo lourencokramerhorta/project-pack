@@ -24,7 +24,7 @@ const userSchema = new Schema(
     },
     location: { type: {type: String}, coordinates: [Number]
     },
-    schedule: { weekDay: String, time: Date },
+    schedule: [{ weekDay: String, time: Date }],
     dogs: [{ type: Schema.Types.ObjectId, ref: "Dog" }],
     parks: [{ type: Schema.Types.ObjectId, ref: "Park" }],
   },
