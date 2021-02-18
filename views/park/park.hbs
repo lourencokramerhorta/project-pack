@@ -28,7 +28,7 @@
 <h4>Reviews</h4>
 {{#each reviews}}
 <div>
-  <h5>{{username.username}}</h5>
+  <h5>{{user_id.username}}</h5>
   <p>Score: {{score}}</p>
   <p>Content: {{content}}</p>
 </div>
@@ -47,7 +47,9 @@
 </div>
 <hr>
 {{!-- DOGS --}}
+{{#each randomDogs}}
 <div>
-  THE DOGS WILL BE HERE
+  <h5>{{name}}</h5>
 </div>
+{{/each}}
 <hr>

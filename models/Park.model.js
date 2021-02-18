@@ -27,6 +27,7 @@ const parkSchema = new Schema(
       enum: ["Small", "Medium", "Large"],
     },
     score: Number,
+    users_favorite: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
   {
     timestamps: true,

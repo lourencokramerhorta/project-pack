@@ -6,18 +6,23 @@ const mongoose = require("mongoose");
 //Require Park Model
 const Park = require("../models/Park.model");
 const Review = require("../models/Review.model");
-const User= require("../models/User.model");
+const User = require("../models/User.model");
 
 //POST parks/park/:id/addFav
 
-router.post('/parks/park/:id/addFav', (req, res, next) => {
+router.post("/parks/park/:id/addFav", (req, res, next) => {
   const { id } = req.params;
   User.findByIdAndUpdate(req.session.currentUser, {
     $push: { parks: id },
   })
-    .then(() => {res.redirect(`/parks/park/${id}`)})
-    .catch(err => console.log(err));
-})
+    .then((editedUser) => {
+      return Park.findByIdAndUpdate(id, {
+        $push: { users_favorite: editedUser._id },
+      });
+    })
+    .then(() => res.redirect(`/parks/park/${id}`))
+    .catch((err) => console.log(err));
+});
 
 //POST parks/park/:id
 router.post("/parks/park/:id", (req, res, next) => {
@@ -59,14 +64,28 @@ router.post("/parks/park/:id", (req, res, next) => {
 //GET parks/park/:id
 router.get("/parks/park/:id", (req, res, next) => {
   Park.findById(req.params.id)
+    .populate({ path: "users_favorite", populate: { path: "dogs" } })
     .then((park) => {
-      Review.find({ park: park._id })
-        .populate("username")
+      const reducer = (acc, curr) => {
+        acc.dogs.concat(curr.dogs);
+      };
+      const dogsFromPark = park.users_favorite
+        .map((fav) => fav.dogs)
+        .reduce(reducer);
+      let randomDogs = [];
+      [1, 2, 3, 4, 5].forEach(() => {
+        let randomIndex = Math.floor(Math.random() * dogsFromPark.length);
+        randomDogs.push(dogsFromPark[randomIndex]);
+        dogsFromPark.splice(randomIndex,1);
+      });
+      Review.find({ park_id: park._id })
+        .populate("user_id")
         .then((reviews) => {
           res.render("park/park", {
             park,
             currentUser: req.session.currentUser,
             reviews,
+            randomDogs,
           });
         })
         .catch((err) => console.log(err));
@@ -129,7 +148,6 @@ router.get("/home/api/:id", (req, res, next) => {
   let _id = req.params.id;
   Park.findById({ _id: _id })
     .then((park) => {
-      console.log("park:", park);
       res.status(200).json({ parks: [park] });
     })
     .catch((err) => console.log(err));

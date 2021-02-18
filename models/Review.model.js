@@ -3,8 +3,8 @@ const { Schema, model } = mongoose;
 
 const reviewSchema = new Schema(
   {
-    username: { type: Schema.Types.ObjectId, ref: "User" },
-    park: { type: Schema.Types.ObjectId, ref: "Park" },
+    user_id: { type: Schema.Types.ObjectId, ref: "User" },
+    park_id: { type: Schema.Types.ObjectId, ref: "Park" },
     content: String,
     score: Number
   },
