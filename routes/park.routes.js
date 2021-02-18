@@ -2,17 +2,46 @@
 const express = require("express");
 const router = express.Router();
 const fileUploader = require("../configs/cloudinary.config");
+const mongoose = require("mongoose");
 //Require Park Model
 const Park = require("../models/Park.model");
 const Review = require("../models/Review.model");
 
 //POST parks/park/:id
-router.post("/parks/park/:id", (req, res, next) => { 
+router.post("/parks/park/:id", (req, res, next) => {
   const { score, content } = req.body;
-  const {id} = req.params
-  Review.create({ score, content, park: id, username: req.session.currentUser._id })
-    .then(() => { res.redirect(`/parks/park/${id}`); })
-    .catch(err => {console.log(err)})
+  const { id } = req.params;
+  const ObjectId = mongoose.Types.ObjectId;
+  Review.create({
+    score,
+    content,
+    park: id,
+    username: req.session.currentUser._id,
+  })
+    .then(() => {
+      Review.aggregate([
+        { $match: { park: ObjectId(id) } },
+        {
+          $group: {
+            _id: null,
+            avgScore: {
+              $avg: "$score",
+            },
+          },
+        },
+      ])
+        .then((output) => {
+          Park.findByIdAndUpdate(id, { score: output[0].avgScore })
+            .then(() => {
+              res.redirect(`/parks/park/${id}`);
+            })
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 //GET parks/park/:id
@@ -53,9 +82,9 @@ router.post(
     Park.create({
       name,
       location: {
-      type: 'Point',
-      coordinates: [longitude, latitude]
-    },
+        type: "Point",
+        coordinates: [longitude, latitude],
+      },
       photo: req.file.path,
       water,
       playObj,
@@ -75,27 +104,32 @@ router.post(
 //GET parks/create-park
 router.get("/parks/create-park", (req, res, next) => {
   const { lat, lng, address } = req.query;
-  res.render("park/createPark", { currentUser: req.session.currentUser, lat, lng, address });
+  res.render("park/createPark", {
+    currentUser: req.session.currentUser,
+    lat,
+    lng,
+    address,
+  });
 });
 
 //GET /home/api/:id
-router.get('/home/api/:id', (req, res, next) => {
-	let _id = req.params.id;
+router.get("/home/api/:id", (req, res, next) => {
+  let _id = req.params.id;
   Park.findById({ _id: _id })
-    .then(park => {
+    .then((park) => {
       console.log("park:", park);
       res.status(200).json({ parks: [park] });
     })
-    .catch(err => console.log(err))
+    .catch((err) => console.log(err));
 });
 
 // GET /home/api
-router.get('/home/api', (req, res, next) => {
+router.get("/home/api", (req, res, next) => {
   Park.find()
     .then((allParksFromDB) => {
       res.status(200).json({ parks: allParksFromDB });
     })
-  .catch(err => console.log(err))
+    .catch((err) => console.log(err));
 });
 
 //GET home
@@ -110,6 +144,4 @@ router.get("/home", (req, res, next) => {
     .catch((err) => console.log(err));
 });
 
-
 module.exports = router;
-
