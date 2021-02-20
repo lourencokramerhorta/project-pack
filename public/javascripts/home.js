@@ -155,16 +155,16 @@ window.addEventListener("load", () => {
     });
   }
 
-  if (searchParkSubmit) {
-    const geocoder = new google.maps.Geocoder();
+  // if (searchParkSubmit) {
+  //   const geocoder = new google.maps.Geocoder();
 
-    document.getElementById('formSearch').addEventListener("submit", (event) => {
-      console.log('im here', event);
-      event.preventDefault();
-      geocodeSearch(geocoder, (lat, lng) => {
-        const name = document.getElementById('name').value
-          window.location.href = `/parks/search?name=${name}&latitude=${lat}&longitude=${lng}`;
-      });
-    });
-  }
+  //   document.getElementById('formSearch').addEventListener("submit", (event) => {
+  //     console.log('im here', event);
+  //     event.preventDefault();
+  //     geocodeSearch(geocoder, (lat, lng) => {
+  //       const name = document.getElementById('name').value
+  //         window.location.href = `/parks/search?name=${name}&latitude=${lat}&longitude=${lng}`;
+  //     });
+  //   });
+  // }
 });
