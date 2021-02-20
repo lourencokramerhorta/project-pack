@@ -1,11 +1,14 @@
 <div class="row">
-  <div class="bg-white shadow rounded overflow-hidden">
-    <div class="px-4 pt-0 pb-4 cover">
-      <div class="media align-items-end profile-head">
+  <div class="px-4 pt-0 pb-4 cover">
+    <div class="media align-items-end profile-head">
+      <div id="greyZone">
 
-        <div class="profile mr-3">
+        <div class="profile mr-3 pt-4">
 
-          <img src="{{user.photo}}" alt="human" width="600" height="auto" class="rounded mb-2 img-thumbnail">
+          <img src="{{user.photo}}" alt="human" width="500" height="auto" class="rounded mb-2 img-thumbnail">
+
+          <h4 class="mt-0 mb-0">{{ user.username }}</h4>
+
 
           {{#if isUser}}
           <a href="/user/{{user.id}}/edit" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
@@ -13,22 +16,28 @@
 
           {{/if}}
         </div>
+      </div>
 
-        <div class="media-body mb-5 text-white">
-          <h4 class="mt-0 mb-0">{{ user.username }}</h4>
-        </div>
-        {{#each user.dogs}}
-        <div>
-          <h3>{{name}}</h3>
-          <img src="{{photo}}" alt="dog" width="100" height="auto" class="rounded mb-2 img-thumbnail">
-          <a href="/dog/{{id}}">view dog</a>
+      <div class="container-fluid">
+        <div class="row">
+          {{#each user.dogs}}
+
+          <div class="p-5 col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <img class="card-img-top" src="{{photo}}" alt="dog">
+            <h5 class="card-title" style="font-size:x-large;">{{name}}</h5>
+            <p>{{age}} year old {{breed}}</p>
+            <a href="/dog/{{id}}" class="btn btn-warning">view dog</a>
+          </div>
+
           {{/each}}
-          <hr>
-
-          {{#unless isUser}}
-          <a href="/user-profile/{{user.id}}/chat">SCHEDULE PLAY DATE!</a>
-          {{/unless}}
         </div>
       </div>
+
+
+      {{#unless isUser}}
+      <a href="/user-profile/{{user.id}}/chat">SCHEDULE PLAY DATE!</a>
+      {{/unless}}
     </div>
   </div>
+
+</div>

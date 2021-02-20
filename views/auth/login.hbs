@@ -1,13 +1,30 @@
 <div id="login">
-  <h2>login</h2>
-  <form action="/login" method="POST">
-    <label for="input-username">Username</label>
-    <input type="text" id="input-username" name="username" placeholder="Your username" />
+  <div class="d-flex justify-content-center my-3">
+    <img src="images/doggologo.png" alt="login image" style="width: 400px;">
+  </div>
 
-    <label for="input-password">Password</label>
-    <input type="password" name="password" id="input-password" placeholder="********" />
+  <form action="/login" method="POST" class="px-5">
 
-    <button type="submit">log in</button>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="form-group col">
+          <input type="text" class="form-control shadow rounded" id="input-username" name="username"
+            placeholder="Your username">
+        </div>
+
+        <div class="form-group col">
+          <input type="password" class="form-control shadow rounded" id="input-password" name="password"
+            placeholder="********">
+        </div>
+
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3">
+      <button type="submit" class="btn btn-warning shadow rounded" style="width: 250px;">log in</button>
+    </div>
 
     {{!-- error message will be added here --}}
   </form>

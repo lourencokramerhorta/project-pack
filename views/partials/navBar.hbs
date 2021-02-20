@@ -2,33 +2,33 @@
 
 <nav class="d-flex align-items-center pt-3 px-3 mx-2">
 
-  <a href="/home" class="mr-auto w-auto p-1 bd-highlight">
-    <img alt="dog logo" src="/images/pack_dog.png" id="navBarlogo" width="60" height="60">
+  <a href="/home" class="mr-auto w-auto p-1 mb-2 bd-highlight">
+    <img alt="dog logo" src="/images/pack_dog_n_i.png" id="navBarlogo" width="60" height="60">
   </a>
 
-  <ul class="d-flex align-items-centre flex-row bd-highlight list-unstyled ms-auto">
+  <ul class="d-flex align-items-center flex-row bd-highlight list-unstyled ms-auto">
     {{#if currentUser}}
 
     <li class="p-1 bd-highlight px-3">
       <form action="/logout" method="POST">
-        <button class="nav-link">Log Out</button>
+        <button class="btn btn-warning shadow rounded">Log Out</button>
       </form>
     </li>
 
     <li class="p-1 bd-highlight px-3">
-      <a href='/user-profile/{{currentUser._id}}'>
-        <img border="0" alt="user photo" src="{{currentUser.photo}}" width="40" height="40">
+      <a href='/user-profile/{{currentUser._id}}' class="shadow rounded">
+        <img border="0" alt="user photo" src="{{currentUser.photo}}" width="40" height="40" class="shadow rounded">
       </a>
     </li>
 
     {{else}}
 
     <li class="p-1 bd-highlight px-3">
-      <a href='/login'>Log in</a>
+      <a href='/login' class="btn btn-warning shadow rounded" style="width: 100px;">Log in</a>
     </li>
 
     <li class="p-1 bd-highlight px-3">
-      <a href='/signup'>Sign up</a>
+      <a href='/signup' class="btn btn-warning shadow rounded" style="width: 100px;">Sign up</a>
     </li>
 
 

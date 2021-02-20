@@ -1,0 +1,116 @@
+<div class="m-5">
+  <form action="/home/dogs/search" method="GET">
+    <div class="form-group">
+
+      <label for="searchFormName">Search by dog name:</label>
+      <input type="text" class="form-control" id="searchFormName" name="name">
+    </div>
+
+    <div class="form-group">
+      <label for="searchFormSize">Search by size:</label>
+      <select class="form-control" id="searchFormSize" name="size">
+        <option value="">Any</option>
+        <option value="small">Small</option>
+        <option value="medium">Medium</option>
+        <option value="large">Large</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="searchFormSex">Search by sex:</label>
+      <select class="form-control" id="searchFormSex" name="sex">
+        <option value="">Any</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Search By age:</label>
+      <input type="number" name="minAge" value="0" max="25" min="0">
+      <input type="number" name="maxAge" value="25" max="25" min="0">
+    </div>
+
+    <div class="form-group">
+      <label for="searchFormBreed">Search by breed:</label>
+      <select class="form-control" id="searchFormBreed" name="breed">
+        <option value="">Any</option>
+        <option value="Labrador">Labrador</option>
+        <option value="German Shepherd Dog">German Shepherd Dog</option>
+        <option value="Retriever">Retriever</option>
+        <option value="French Bulldog">French Bulldog</option>
+        <option value="Bulldog">Bulldog</option>
+        <option value="Poodle">Poodle</option>
+        <option value="Beagle">Beagle</option>
+        <option value="Rottweiler">Rottweiler</option>
+        <option value="German Shorthaired">German Shorthaired</option>
+        <option value="Pembroke Welsh Corgi">Pembroke Welsh Corgi</option>
+      </select>
+    </div>
+
+    <div class="form-check">
+      <label class="form-check-label" for="sterilized">
+        Sterilized
+      </label>
+      <input class="form-check-input" type="checkbox" value="true" id="sterilized" name="sterilized">
+    </div>
+    <button type="submit" class="btn btn-warning">SEARCH</button>
+  </form>
+</div>
+
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="p-5 col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <label for="searchFormName">Search by dog name:</label>
+      <input type="text" class="form-control" id="searchFormName" name="name">
+    </div>
+    <div class="p-5 col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <label for="searchFormSize">Search by size:</label>
+      <select class="form-control" id="searchFormSize" name="size">
+        <option value="">Any</option>
+        <option value="small">Small</option>
+        <option value="medium">Medium</option>
+        <option value="large">Large</option>
+      </select>
+    </div>
+    <div class="p-5 col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <label for="searchFormSex">Search by sex:</label>
+      <select class="form-control" id="searchFormSex" name="sex">
+        <option value="">Any</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+    </div>
+    <div class="p-5 col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <label>Search By age:</label>
+      <input type="number" name="minAge" value="0" max="25" min="0">
+      <input type="number" name="maxAge" value="25" max="25" min="0">
+    </div>
+    <div class="p-5 col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <label for="searchFormBreed">Search by breed:</label>
+      <select class="form-control" id="searchFormBreed" name="breed">
+        <option value="">Any</option>
+        <option value="Labrador">Labrador</option>
+        <option value="German Shepherd Dog">German Shepherd Dog</option>
+        <option value="Retriever">Retriever</option>
+        <option value="French Bulldog">French Bulldog</option>
+        <option value="Bulldog">Bulldog</option>
+        <option value="Poodle">Poodle</option>
+        <option value="Beagle">Beagle</option>
+        <option value="Rottweiler">Rottweiler</option>
+        <option value="German Shorthaired">German Shorthaired</option>
+        <option value="Pembroke Welsh Corgi">Pembroke Welsh Corgi</option>
+      </select>
+    </div>
+    <div class="p-5 col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <label class="form-check-label" for="sterilized">
+        Sterilized
+      </label>
+      <input class="form-check-input" type="checkbox" value="true" id="sterilized" name="sterilized">
+    </div>
+
+  </div>
+</div>

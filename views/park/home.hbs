@@ -1,15 +1,23 @@
 {{!-- MAP --}}
-<div id='map' class="container-fluid"></div>
+
+
+
+<div id='map' {{!-- class="container-fluid" --}}></div>
 <div id="geocoder">
-  <input id="address" type="textbox"/>
-  <input id="submit" type="button" value="Find location"/>
+  <input id="address" type="textbox" />
+  <input id="submit" type="button" value="Find location" />
+  {{#if currentUser}}
+  <div id="btnGroupMap">
+    {{> tabs}}
+  </div>
+  {{/if}}
 </div>
-<hr>
+</div>
+
+
 {{!-- W/ SESSION --}}
 {{#if currentUser}}
-{{!-- TABS --}}
-{{> tabs}}
-<hr>
+
 <a href="/parks/create-park" id="create-park-home">Create park</a>
 <hr>
 {{!-- PARK LIST --}}
@@ -36,4 +44,3 @@
 </div>
 {{/each}}
 {{/if}}
-

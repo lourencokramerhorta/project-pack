@@ -1,19 +1,39 @@
 {{!-- TABS --}}
-{{> tabs}}
+<div id="greyZone">
 
-<h2>All Users</h2>
-<form action="/home/users" method="GET">
-  <label>
-    Search User:
-    <input type="text" name="username">
-  </label>
+  <div id="btnGroup">
+    {{> tabs}}
+  </div>
 
-  <button type="submit">SEARCH</button>
+
+  <div class="row justify-content-end">
+    <div class="col-4">
+      <input type="text" class="form-control" placeholder="Search" aria-label="Search" name="username">
+    </div>
+    <div class="col-4 pb-4">
+      <button type="submit" class="btn btn-warning">SEARCH</button>
+    </div>
+  </div>
+</div>
+
+
+
+
 </form>
 
-{{#each users}}
+<div class="container-fluid">
+  <div class="row">
+    {{#each users}}
 
-<h3>{{username}}</h3>
-<a href="/user-profile/{{id}}">get to know this human</a>
+    <div class="p-5 col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <img class="card-img-top" src="{{photo}}" alt="dog">
+      <div class="card-body">
+        <h5 class="card-title">{{username}}</h5>
+        <p>has {{dogs.length}} dogs</p>
+        <a href="/user-profile/{{id}}" class="btn btn-warning">get to know this human</a>
+      </div>
+    </div>
 
-{{/each}}
+    {{/each}}
+  </div>
+</div>
