@@ -4,8 +4,10 @@
 
 <div id='map' {{!-- class="container-fluid" --}}></div>
 <div id="geocoder">
-  <input id="address" type="textbox" />
-  <input id="submit" type="button" value="Find location" />
+  <div id="geoBtn">
+    <input id="address" type="textbox" />
+    <input id="submit" type="button" class="btn btn-warning shadow rounded-pill" value="Find location" />
+  </div>
   {{#if currentUser}}
   <div id="btnGroupMap">
     {{> tabs}}
