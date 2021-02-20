@@ -15,22 +15,28 @@ router.post("/user-profile/:id/chat", (req, res, next) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/user-profile/:id/chat", (req, res, next) => {  
+router.get("/user-profile/:id/chat", (req, res, next) => {
   //a
   User.find({ _id: req.params.id })
-    .then(user => { 
+    .then((user) => {
+      console.log(user);
       Message.find({
         $and: [
-          { $or: [{ from: req.session.currentUser._id }, {from: req.params.id }] },
-          { $or: [{ to: req.session.currentUser._id }, {to: req.params.id }] }
-        ]
+          {
+            $or: [
+              { from: req.session.currentUser._id },
+              { from: req.params.id },
+            ],
+          },
+          { $or: [{ to: req.session.currentUser._id }, { to: req.params.id }] },
+        ],
       })
         .populate("from")
         .populate("to")
         .then((messages) => {
           let chatUser = {};
           if (messages[0] === undefined) {
-            chatUser = user;
+            chatUser = user[0];
           } else if (messages[0].to.id === req.session.currentUser._id) {
             chatUser = messages[0].from;
             console.log(chatUser);
@@ -40,12 +46,14 @@ router.get("/user-profile/:id/chat", (req, res, next) => {
           res.render("user/chat", {
             messages,
             currentUser: req.session.currentUser,
-            chatUser
+            chatUser,
           });
         })
         .catch((err) => console.log(err));
     })
-    .catch(err => { console.log(err) });
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 //GET user profile

@@ -23,6 +23,8 @@ window.addEventListener("load", () => {
   const latElement = document.getElementById("latitude");
   const lngElement = document.getElementById("longitude");
   const searchParkSubmit = document.getElementById("submit-searchPark");
+  console.log("createParkHome", createParkHome);
+  console.log("createParkSubmit", createParkSubmit);
 
   function redirectToParkWCoord(lat, lng, address) {
     createParkHome.href = `/parks/create-park?lat=${lat}&lng=${lng}&address=${address}`;
@@ -61,12 +63,11 @@ window.addEventListener("load", () => {
     let address = document.getElementById("addressSearch").value;
     geocoder.geocode({ address: address }, (results, status) => {
       if (status === "OK") {
-          dataFunction(
-            results[0].geometry.location.lat(),
-            results[0].geometry.location.lng()
-          );
-        }
-       else {
+        dataFunction(
+          results[0].geometry.location.lat(),
+          results[0].geometry.location.lng()
+        );
+      } else {
         console.log(
           `Geocode was not successful for the following reason: ${status}`
         );
@@ -147,9 +148,11 @@ window.addEventListener("load", () => {
     //Get geolocation from address
     document.getElementById("submit").addEventListener("click", () => {
       if (createParkHome) {
+        console.log("blubla");
         geocodeAddress(geocoder, map, redirectToParkWCoord);
       }
       if (createParkSubmit) {
+        console.log("creat sub");
         geocodeAddress(geocoder, map, changeCoordInputs);
       }
     });
@@ -158,12 +161,14 @@ window.addEventListener("load", () => {
   if (searchParkSubmit) {
     const geocoder = new google.maps.Geocoder();
 
-    document.getElementById('formSearch').addEventListener("submit", (event) => {
-      event.preventDefault();
-      geocodeSearch(geocoder, (lat, lng) => {
-        const name = document.getElementById('name').value
+    document
+      .getElementById("formSearch")
+      .addEventListener("submit", (event) => {
+        event.preventDefault();
+        geocodeSearch(geocoder, (lat, lng) => {
+          const name = document.getElementById("name").value;
           window.location.href = `/parks/search?name=${name}&latitude=${lat}&longitude=${lng}`;
+        });
       });
-    });
   }
 });
