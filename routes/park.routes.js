@@ -69,19 +69,23 @@ router.get("/parks/park/:id", (req, res, next) => {
       const reducer = (acc, curr) => {
         acc.dogs.concat(curr.dogs);
       };
-
-      if (park.users_favorite) {
+      let randomDogs = [];
+      if (park.users_favorite.length !== 0) {
+        console.log(park.users_favorite);
         const dogsFromPark = park.users_favorite
+
           .map((fav) => fav.dogs)
           .reduce(reducer);
-        let randomDogs = [];
+        randomDogs = [];
         [1, 2, 3, 4, 5].forEach(() => {
           let randomIndex = Math.floor(Math.random() * dogsFromPark.length);
           randomDogs.push(dogsFromPark[randomIndex]);
-          dogsFromPark.splice(randomIndex,1);
-        });   
+          dogsFromPark.splice(randomIndex, 1);
+        });
+      } else {
+        randomDogs = [];
       }
-      
+
       Review.find({ park_id: park._id })
         .populate("user_id")
         .then((reviews) => {
@@ -156,19 +160,19 @@ router.get("/parks/search", (req, res, next) => {
 
   if (latitude && longitude) {
     ourQuery = {
-    $and: [
-      { name: { $regex: name, $options: "i" } },
-      {
-        location: {
-          $near: {
-            $geometry: { type: "Point", coordinates: [longitude, latitude] },
-            $minDistance: 1,
-            $maxDistance: 5000,
+      $and: [
+        { name: { $regex: name, $options: "i" } },
+        {
+          location: {
+            $near: {
+              $geometry: { type: "Point", coordinates: [longitude, latitude] },
+              $minDistance: 1,
+              $maxDistance: 5000,
+            },
           },
         },
-      },
-    ],
-  }
+      ],
+    };
   } else {
     ourQuery = { name: { $regex: name, $options: "i" } };
   }
