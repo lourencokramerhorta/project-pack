@@ -143,6 +143,41 @@ router.get("/parks/create-park", (req, res, next) => {
   });
 });
 
+//SEARCH PARKS
+router.get("/parks/search", (req, res, next) => {
+  const { currentUser } = req.session;
+  let { name, latitude, longitude } = req.query;
+
+  Park.find({
+    $and: [
+    { name: { $regex: name, $options: "i" } },
+    { location: {
+        $near: {
+          $geometry: { type: "Point", coordinates: [longitude, latitude] },
+          $minDistance: 1,
+          $maxDistance: 5000,
+        },
+      },
+    }
+    //   { size: { $regex: size, $options: "i" } },
+    //   { breed: { $regex: breed, $options: "i" } },
+    //   { age: { $gte: minAge, $lte: maxAge } },
+    //   { sex: { $regex: sex, $options: "i" } },
+    //   { sterilized: sterilized },
+    ],
+    }
+  )
+    .then((parks) => {
+      res.render("park/home", {
+        parks,
+        currentUser,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 //GET /home/api/:id
 router.get("/home/api/:id", (req, res, next) => {
   let _id = req.params.id;

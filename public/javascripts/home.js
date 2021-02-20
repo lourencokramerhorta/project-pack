@@ -22,6 +22,7 @@ window.addEventListener("load", () => {
   const parkView = document.getElementById("parkView");
   const latElement = document.getElementById("latitude");
   const lngElement = document.getElementById("longitude");
+  const searchParkSubmit = document.getElementById("submit-searchPark");
 
   function redirectToParkWCoord(lat, lng, address) {
     createParkHome.href = `/parks/create-park?lat=${lat}&lng=${lng}&address=${address}`;
@@ -55,6 +56,23 @@ window.addEventListener("load", () => {
     });
   }
 
+  //Function geocodeSearch for search
+  function geocodeSearch(geocoder, dataFunction) {
+    const address = document.getElementById("addressSearch").value;
+    geocoder.geocode({ address: address }, (results, status) => {
+      if (status === "OK") {
+        dataFunction(
+          results[0].geometry.location.lat(),
+          results[0].geometry.location.lng()
+        );
+      } else {
+        console.log(
+          `Geocode was not successful for the following reason: ${status}`
+        );
+      }
+    });
+  }
+
   //Function placeParks
   function placeParks(parks, map) {
     for (let park of parks) {
@@ -76,7 +94,9 @@ window.addEventListener("load", () => {
       <a href="/parks/park/${park._id}">View</a>
       </div>`;
       const infoWindow = new google.maps.InfoWindow({ content: contentString });
-      pin.addListener('click', () => { infoWindow.open(map, pin) });
+      pin.addListener("click", () => {
+        infoWindow.open(map, pin);
+      });
     }
   }
 
@@ -133,4 +153,14 @@ window.addEventListener("load", () => {
       }
     });
   }
+
+  //Initialize geocoder
+  
+  if (searchParkSubmit) {
+    const geocoder = new google.maps.Geocoder();
+    
+  document.getElementById("submit-SeacrhPark").addEventListener("click", () => {
+    geocodeSearch(geocoder, changeCoordInputs);
+    });
+}
 });

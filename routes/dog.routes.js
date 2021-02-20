@@ -69,8 +69,6 @@ router.get("/home/dogs/search", (req, res, next) => {
   sterilized = !!sterilized;
   console.log(sterilized);
 
-  console.log("this is a query", req.query);
-
   Dog.find({
     $and: [
       { name: { $regex: name, $options: "i" } },
