@@ -69,15 +69,19 @@ router.get("/parks/park/:id", (req, res, next) => {
       const reducer = (acc, curr) => {
         acc.dogs.concat(curr.dogs);
       };
-      const dogsFromPark = park.users_favorite
-        .map((fav) => fav.dogs)
-        .reduce(reducer);
-      let randomDogs = [];
-      [1, 2, 3, 4, 5].forEach(() => {
-        let randomIndex = Math.floor(Math.random() * dogsFromPark.length);
-        randomDogs.push(dogsFromPark[randomIndex]);
-        dogsFromPark.splice(randomIndex,1);
-      });
+
+      if (park.users_favorite) {
+        const dogsFromPark = park.users_favorite
+          .map((fav) => fav.dogs)
+          .reduce(reducer);
+        let randomDogs = [];
+        [1, 2, 3, 4, 5].forEach(() => {
+          let randomIndex = Math.floor(Math.random() * dogsFromPark.length);
+          randomDogs.push(dogsFromPark[randomIndex]);
+          dogsFromPark.splice(randomIndex,1);
+        });   
+      }
+      
       Review.find({ park_id: park._id })
         .populate("user_id")
         .then((reviews) => {
