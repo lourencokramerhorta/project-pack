@@ -58,14 +58,15 @@ window.addEventListener("load", () => {
 
   //Function geocodeSearch for search
   function geocodeSearch(geocoder, dataFunction) {
-    const address = document.getElementById("addressSearch").value;
+    let address = document.getElementById("addressSearch").value;
     geocoder.geocode({ address: address }, (results, status) => {
       if (status === "OK") {
-        dataFunction(
-          results[0].geometry.location.lat(),
-          results[0].geometry.location.lng()
-        );
-      } else {
+          dataFunction(
+            results[0].geometry.location.lat(),
+            results[0].geometry.location.lng()
+          );
+        }
+       else {
         console.log(
           `Geocode was not successful for the following reason: ${status}`
         );
@@ -154,13 +155,16 @@ window.addEventListener("load", () => {
     });
   }
 
-  //Initialize geocoder
-  
   if (searchParkSubmit) {
     const geocoder = new google.maps.Geocoder();
-    
-  document.getElementById("submit-SeacrhPark").addEventListener("click", () => {
-    geocodeSearch(geocoder, changeCoordInputs);
+
+    document.getElementById('formSearch').addEventListener("submit", (event) => {
+      console.log('im here', event);
+      event.preventDefault();
+      geocodeSearch(geocoder, (lat, lng) => {
+        const name = document.getElementById('name').value
+          window.location.href = `/parks/search?name=${name}&latitude=${lat}&longitude=${lng}`;
+      });
     });
-}
+  }
 });

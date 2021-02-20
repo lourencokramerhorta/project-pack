@@ -14,16 +14,16 @@
 <hr>
 {{!-- PARK LIST --}}
 <h3>List Parks</h3>
-{{!-- <form action="/parks/search" method="GET"> --}}
+<form action="/parks/search" method="GET" id="formSearch">
 
   <label>Search Park:</label>
-    <input type="text" name="name">
+    <input type="text" name="name" id="name">
   <br>
 
   <label>Location:</label>
-  <input type="text" name="addressSearch">
-  <input type="text" name="latitude">
-  <input type="text" name="longitude">
+  <input type="text" name="addressSearch" id="addressSearch">
+  <input type="text" name="latitude" id="latitude">
+  <input type="text" name="longitude" id="longitude">
   <br>
 
   <button type="submit" id="submit-searchPark">SEARCH</button>
