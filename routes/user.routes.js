@@ -25,9 +25,11 @@ router.get("/user-profile/:id/chat", (req, res, next) => {
     .populate("from")
     .populate("to")
     .then((messages) => {
+      User.find({ _id: req.params.id })
+        .then(user => { return user });
       let chatUser = {};
       if (messages[0] === undefined) {
-        chatUser = {username: "dummy", _id: req.params.id}
+        chatUser = user;
       } else if (messages[0].to.id === req.session.currentUser._id) {
         chatUser = messages[0].from;
         console.log(chatUser);

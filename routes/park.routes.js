@@ -148,25 +148,30 @@ router.get("/parks/search", (req, res, next) => {
   const { currentUser } = req.session;
   let { name, latitude, longitude } = req.query;
 
-  Park.find({
+  let ourQuery = {};
+
+  if (latitude && longitude) {
+    ourQuery = {
     $and: [
-    { name: { $regex: name, $options: "i" } },
-    { location: {
-        $near: {
-          $geometry: { type: "Point", coordinates: [longitude, latitude] },
-          $minDistance: 1,
-          $maxDistance: 5000,
+      { name: { $regex: name, $options: "i" } },
+      {
+        location: {
+          $near: {
+            $geometry: { type: "Point", coordinates: [longitude, latitude] },
+            $minDistance: 1,
+            $maxDistance: 5000,
+          },
         },
       },
-    }
-    //   { size: { $regex: size, $options: "i" } },
-    //   { breed: { $regex: breed, $options: "i" } },
-    //   { age: { $gte: minAge, $lte: maxAge } },
-    //   { sex: { $regex: sex, $options: "i" } },
-    //   { sterilized: sterilized },
     ],
-    }
-  )
+  }
+  } else {
+    ourQuery = { name: { $regex: name, $options: "i" } };
+  }
+
+  console.log(ourQuery);
+
+  Park.find(ourQuery)
     .then((parks) => {
       res.render("park/home", {
         parks,
