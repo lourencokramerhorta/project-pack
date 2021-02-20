@@ -16,6 +16,7 @@ router.post("/user-profile/:id/chat", (req, res, next) => {
 });
 
 router.get("/user-profile/:id/chat", (req, res, next) => {  
+  //a
   User.find({ _id: req.params.id })
     .then(user => { 
       Message.find({
