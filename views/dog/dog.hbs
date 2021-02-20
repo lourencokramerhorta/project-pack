@@ -1,34 +1,84 @@
-{{!-- DOG INFO --}}
+<div class="row">
+  <div class="px-4 pt-0 pb-4 cover">
+    <div class="media align-items-end profile-head">
+      <div id="greyZone">
+
+        <div class="profile mr-3 pt-4">
+
+          <img src="{{dog.photo}}" alt="human" width="500" height="auto" class="rounded mb-2 img-thumbnail">
+
+          <h4 class="mt-0 mb-0">{{ dog.name }}</h4>
+
+          <p>I'm a {{dog.size}} {{dog.age}} year old {{dog.breed}}.
+            And my human is called <a href="/user-profile/{{dog.human.id}}">{{dog.human.username}}</a>!
+          </p>
+          <p>sex: {{dog.sex}}</p>
+          <p>sterilized: {{dog.sterilized}}</p>
+
+
+          {{#if isUser}}
+          <a href="/user/{{dog.id}}/edit" class="btn btn-outline-dark btn-sm btn-block">Edit dog</a>
+          <a href="/delete-dog" class="btn btn-outline-dark btn-sm btn-block">Delete Dog</a>
+
+          {{/if}}
+        </div>
+      </div>
+
+      <div class="container-fluid">
+        <div class="row">
+          {{#each user.dogs}}
+
+          <div class="p-5 col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <img class="card-img-top" src="{{photo}}" alt="dog">
+            <h5 class="card-title" style="font-size:x-large;">{{name}}</h5>
+            <p>{{age}} year old {{breed}}</p>
+            <a href="/dog/{{id}}" class="btn btn-warning">view dog</a>
+          </div>
+
+          {{/each}}
+        </div>
+      </div>
+
+
+      {{#unless isUser}}
+      <a href="/user-profile/{{user.id}}/chat">SCHEDULE PLAY DATE!</a>
+      {{/unless}}
+    </div>
+  </div>
+
+</div>
+
+{{!-- DOG INFO
 <h2>woof woof mother fucker, im {{ dog.name }}!</h2>
 <p>I`m a {{dog.age}} years old {{dog.breed}}</p>
 <p>size: {{dog.size}}</p>
 <p>sex: {{dog.sex}}</p>
-<p>Human: {{dog.human.username}} {{dog.human.name}}</p>
+<p>Human: {{dog.human.username}}</p>
 <img src="{{dog.photo}}" alt="dog"><br>
 {{#if isOwner}}
 <b>Edit dog here</b>
 {{/if}}
 <hr>
-
+--}}
 {{!-- Human SECTION --}}
-<a href="/user-profile/{{dog.human.id}}">{{dog.human.username}}</a>
+{{!-- <a href="/user-profile/{{dog.human.id}}">{{dog.human.username}}</a> --}}
 
 {{!-- DOG FRIENDS SECTION --}}
-{{#each dog.friends}}
+{{!-- {{#each dog.friends}}
 <div>
   <h3>{{name}}</h3>
   <a href="/dog/{{id}}">view dog</a>
   {{/each}}
 </div>
-<hr>
+<hr> --}}
 {{!-- DELETE DOG --}}
-{{#if isOwner}}
+{{!-- {{#if isOwner}}
 <form action="/dog/{{dog._id}}/delete" method="POST">
   <button>Delete</button>
 </form>
-{{/if}}
+{{/if}} --}}
 
 {{!-- ADD AS FRIEND SECTION --}}
-{{#unless isOwner}}
+{{!-- {{#unless isOwner}}
 <b>Add as friend will be here!</b>
-{{/unless}}
+{{/unless}} --}}
