@@ -90,9 +90,9 @@ window.addEventListener("load", () => {
         map.setCenter(pin.position);
       }
       const contentString = `<div>
-      <h4>${park.name}</h4>
-      <img src="${park.photo}" alt="park">
-      <a href="/parks/park/${park._id}">View</a>
+      <h6>${park.name}</h6>
+      <img src="${park.photo}" alt="park" width="180" height="160"><br>
+      <b><a href="/parks/park/${park._id}">View</a></b>
       </div>`;
       const infoWindow = new google.maps.InfoWindow({ content: contentString });
       pin.addListener("click", () => {
