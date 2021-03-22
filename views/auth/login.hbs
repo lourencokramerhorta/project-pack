@@ -28,5 +28,7 @@
 
     {{!-- error message will be added here --}}
   </form>
-  <p>{{errorMessage}}</p>
+   {{#if errorMessage}}
+      <p class="error">{{errorMessage}}</p>
+    {{/if}}
 </div>

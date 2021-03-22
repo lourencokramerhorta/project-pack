@@ -8,6 +8,8 @@ const saltRounds = 10;
 const User = require("../models/User.model");
 //Require RouteGuard
 const RouteGuard = require("../middleware/routeGuard");
+//Require mongoose for auth validation
+const mongoose = require('mongoose');
 
 //GET login
 router.get("/login", (req, res) => res.render("auth/login"));
@@ -17,7 +19,7 @@ router.post("/login", (req, res, next) => {
   const { username, password } = req.body;
   if (username === "" || password === "") {
     res.render("auth/login", {
-      errorMessage: "enter both user and password",
+      errorMessage: "Please enter both user and password to login.",
     });
     return;
   }
@@ -25,16 +27,16 @@ router.post("/login", (req, res, next) => {
   User.findOne({ username })
     .then((user) => {
       if (!user) {
-        res.render("auth/login", { errorMessage: "User is not registerd." });
+        res.render("auth/login", { errorMessage: "User is not registered." });
         return;
       } else if (bcryptjs.compareSync(password, user.password)) {
         req.session.currentUser = user;
         res.redirect("/home");
       } else {
-        res.render("auth/login", { errorMessage: "Wrong password." });
+        res.render("auth/login", { errorMessage: "Incorrect password." });
       }
     })
-    .catch((err) => next(err));
+    .catch(err => next(err));
 });
 
 //POST logout
@@ -48,8 +50,19 @@ router.get("/signup", (req, res) => res.render("auth/signup"));
 
 //POST sign up
 router.post("/signup", (req, res, next) => {
-  console.log("The form data: ", req.body);
   const { username, password, email } = req.body;
+
+  if (!username || !email || !password) {
+    res.render('auth/signup', { errorMessage: 'All fields are mandatory. Please provide your username, email and password.' });
+    return;
+  }
+
+  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+  if (!regex.test(password)) {
+    res
+      .status(500)
+      .render('auth/signup', { errorMessage: 'Password needs to have at least 6 characters and must contain at least one number, one lowercase and one uppercase letter.' });
+  }
 
   bcryptjs
     .genSalt(saltRounds)
@@ -59,9 +72,18 @@ router.post("/signup", (req, res, next) => {
       return User.create({ email, username, password: passwordHash });
     })
     .then((user) => {
+      req.session.currentUser = user;
       res.redirect("/home");
     })
-    .catch((err) => next(err));
+    .catch(err => {
+      if(err instanceof mongoose.Error.ValidationError) {
+        res.status(500).render('auth/signup', {errorMessage: err.message})
+      } else if (err.code === 11000) {
+        res.status(500).render('auth/signup', {errorMessage: 'Username and email need to be unique. Either username or email is already used.'})
+      } else {
+        next(err)
+      }
+    })
 });
 
 module.exports = router;

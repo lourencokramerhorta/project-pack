@@ -1,5 +1,3 @@
-// configs/session.config.js
-
 // require session
 const session = require('express-session');
 
