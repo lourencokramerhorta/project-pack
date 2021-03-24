@@ -1,5 +1,6 @@
 //Get default location
 let defaultLocation = { lat: 38.71667, lng: -9.13333 };
+
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
     (position) => {
@@ -20,6 +21,7 @@ window.addEventListener("load", () => {
   const createParkHome = document.getElementById("create-park-home");
   const createParkSubmit = document.getElementById("create-park-submit");
   const parkView = document.getElementById("parkView");
+  const parkHomeAnony = document.getElementById('parkHomeAnonymous');
   const latElement = document.getElementById("latitude");
   const lngElement = document.getElementById("longitude");
   const searchParkSubmit = document.getElementById("submit-searchPark");
@@ -126,7 +128,7 @@ window.addEventListener("load", () => {
   if (mapElement) {
     //Initialize map
     const map = new google.maps.Map(mapElement, {
-      zoom: 13,
+      zoom: 15,
       center: defaultLocation,
     });
 
@@ -147,8 +149,7 @@ window.addEventListener("load", () => {
 
     //Get geolocation from address
     document.getElementById("submit").addEventListener("click", () => {
-      if (createParkHome) {
-        console.log("blubla");
+      if (createParkHome || parkHomeAnony) {
         geocodeAddress(geocoder, map, redirectToParkWCoord);
       }
       if (createParkSubmit) {

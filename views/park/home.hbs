@@ -1,3 +1,6 @@
+{{!-- HIDDEN INFO --}}
+<p style="display: none" id="parkHomeAnonymous">park anonymous</p>
+
 {{!-- MAP --}}
 <div id='map' {{!-- class="container-fluid" --}}></div>
 <div id="geocoder">
@@ -5,83 +8,12 @@
     <input id="address" type="textbox" />
     <input id="submit" type="button" class="btn btn-warning shadow rounded-pill" value="Find location" />
   </div>
-  {{#if currentUser}}
-  <div id="btnGroupMap">
-    {{> tabs}}
-  </div>
-  {{/if}}
 </div>
 </div>
 
 
 {{!-- W/ SESSION --}}
 {{#if currentUser}}
-
 <a href="/parks/create-park" id="create-park-home" class="btn btn-warning shadow">Create park</a>
-
-{{!-- PARK LIST --}}
-<div class="d-flex flex-column justify-content-center">
-
-  <form action="/parks/search" method="GET" id="formSearch">
-
-    <div class="row justify-content-end pt-4">
-      <div class="col-4">
-        <input id="name" type="text" class="form-control" placeholder="Search by name" aria-label="Search" name="name">
-      </div>
-      <div class="col-4">
-
-        <input id="addressSearch" type="text" class="form-control" aria-label="Search" name="addressSearch"
-          placeholder="adress">
-        <input id="latitude" type="hidden" class="form-control" aria-label="Search" name="latitude"
-          placeholder="latitude">
-        <input id="longitude" type="hidden" class="form-control" aria-label="Search" name="longitude"
-          placeholder="longitude">
-      </div>
-
-
-
-
-      <div class="col-4 pb-4">
-        <button type="submit" class="btn btn-warning">SEARCH</button>
-      </div>
-    </div>
-  </form>
-</div>
-</div>
-
-
-
-
-
-
-<div class="container-fluid">
-  <div class="row">
-
-    {{#each parks}}
-
-
-    <div class="p-4 col-xs-12 col-sm-6 col-md-4 col-lg-3">
-      <img class="card-img-top" src="{{photo}}" alt="dog">
-      <h5 class="card-title" style="font-size:x-large;">{{name}}</h5>
-      <p>This is a {{size}} park that is {{crowded}} crowded, and has {{ground}} ground.</p>
-      <h5>this park has access to:</h5>
-      {{#if water}}<p>
-        - water;
-      </p>{{/if}}
-      {{#if poopBags}}<p>
-        - poopBags;
-      </p>{{/if}}
-      {{#if playObj}}<p>
-        - playing objecs;
-      </p>{{/if}}
-      {{#if cafe}}<p>
-        - cafe;
-      </p>{{/if}}
-      <a href="/parks/park/{{id}}" class="btn btn-warning">view park</a>
-    </div>
-
-    {{/each}}
-  </div>
-</div>
-
+<a href="/parks" class="btn btn-warning shadow">View parks</a>
 {{/if}}
