@@ -1,19 +1,18 @@
 {{!-- HIDDEN INFO --}}
+<div>
 <p style="display: none" id="parkHomeAnonymous">park anonymous</p>
 
 {{!-- MAP --}}
-<div id='map' {{!-- class="container-fluid" --}}></div>
+<div id='map'></div>
 <div id="geocoder">
   <div id="geoBtn">
     <input id="address" type="textbox" />
-    <input id="submit" type="button" class="btn btn-warning shadow rounded-pill" value="Find location" />
+    <input id="submit" type="button" class="btn btn-warning shadow rounded-pill m-1" value="Find location" />
+    {{!-- W/ SESSION --}}
+    {{#if currentUser}}
+    <a href="/parks/create-park" id="create-park-home" class="btn btn-warning shadow hoverMap m-1">Create park</a>
+    <a href="/parks" class="btn btn-warning shadow hoverMap m-1">View parks</a>
+    {{/if}}
   </div>
 </div>
 </div>
-
-
-{{!-- W/ SESSION --}}
-{{#if currentUser}}
-<a href="/parks/create-park" id="create-park-home" class="btn btn-warning shadow">Create park</a>
-<a href="/parks" class="btn btn-warning shadow">View parks</a>
-{{/if}}

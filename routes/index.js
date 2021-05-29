@@ -13,7 +13,6 @@ router.get('/', (req, res, next) => {
        res.render("park/home", {
          parks,
          currentUser: req.session.currentUser,
-         maps_url: `https://maps.googleapis.com/maps/api/js?key=${process.env.MAPS_API_KEY}`
        });
      })
      .catch((err) => console.log(err));
